@@ -5,6 +5,14 @@ import App from './App';
 import './App.css';
 
 const theme = createTheme({
+  palette: {
+    primary: {
+        main: '#1976d2',
+    },
+    secondary: {
+        main: '#dc004e',
+    },
+},
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root')); 
