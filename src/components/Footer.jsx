@@ -1,10 +1,9 @@
-
 import React from 'react';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import '../styles/footer.css'
 
 class Footer extends React.Component {
-   openGithub = () => {
+  openGithub = () => {
         window.open("https://github.com/NayelyGV/pokemon-catalog");
     }
 
