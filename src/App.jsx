@@ -132,11 +132,14 @@ class App extends React.Component {
 
     //Obtiene los pokemoes desde la api
     getAllPokemons = async (offset, limit) => {
-
-        const response = await BaseUrl.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`).catch((err) => console.log("Error:", err));
-        this.getPokemonData(response.data.results);
-
-    }
+      try {
+          const response = await BaseUrl.get(`https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`);
+          this.getPokemonData(response.data.results);
+      } catch (error) {
+          console.error("Error:", error);
+          this.setState({ showLoading: false }); // Cambiar el estado si hay un error
+      }
+  }
 
      //Obtiene  datos adicionales de los pokemones 
     getPokemonData = async (result) => {
@@ -349,7 +352,6 @@ class App extends React.Component {
             sortArr.sort((a, b) => (a.name > b.name) ? 1 : ((b.name > a.name) ? -1 : 0))
         }
 
-
         this.state.isFilter ?
             this.setState({
                 filterPokemons: sortArr,
@@ -363,9 +365,7 @@ class App extends React.Component {
     }
 
     handleChangeTypes = (event) => {
-
         debugger
-
         if (event.target.value === "all types") {
             const allPoks = this.state.allPokemons;
             if (this.state.sorttype === "Name") {
@@ -423,18 +423,18 @@ class App extends React.Component {
     }
 
     render() {
-        return (
-            <>
-                <Scroll showBelow={250} className="scroll__top" />
-                {this.state.showLoading && <Loading />}
-                {!this.state.showLoading && <div className="app__container">
-                    {this.state.showInfo &&
-                        <InfoDialog
-                            open={this.state.showInfo}
-                            abilities={this.state.abilities}
-                            height={this.state.height}
-                            weight={this.state.weight}
-                            category={this.state.category}
+      return (
+        <>
+          <Scroll showBelow={250} className="scroll__top" />
+          {this.state.showLoading && <Loading />}
+          {!this.state.showLoading && <div className="app__container">
+          {this.state.showInfo &&
+          <InfoDialog
+            open={this.state.showInfo}
+            abilities={this.state.abilities}
+            height={this.state.height}
+            weight={this.state.weight}
+            category={this.state.category}
                             genera={this.state.genera}
                             genderRate={this.state.genderRate}
                             stats={this.state.stats}
@@ -445,21 +445,21 @@ class App extends React.Component {
                             evoChain={this.state.evoChain}
                             cancel={() => this.closeDialog()}
                             evolutionPokemon={this.fetchPokemonData}>
-                        </InfoDialog>}
-                    <Header />
-                    <Filters
-                        valueregion={this.state.valueregion}
-                        regions={this.state.regions}
-                        valuetype={this.state.valuetype}
-                        sorttype={this.state.sorttype}
-                        valuesearch={this.state.valuesearch}
-                        types={this.state.types}
-                        sortby={this.state.sortby}
-                        regionsSelect={this.handleChangeRegions}
-                        typesSelect={this.handleChangeTypes}
-                        sortSelect={this.handleChangeSort}
-                        searchChange={this.handleChangeSearch}
-                    />
+          </InfoDialog>}
+          <Header />
+          <Filters
+            valueregion={this.state.valueregion}
+              regions={this.state.regions}
+              valuetype={this.state.valuetype}
+              sorttype={this.state.sorttype}
+              valuesearch={this.state.valuesearch}
+              types={this.state.types}
+              sortby={this.state.sortby}
+              regionsSelect={this.handleChangeRegions}
+              typesSelect={this.handleChangeTypes}
+              sortSelect={this.handleChangeSort}
+            searchChange={this.handleChangeSearch}
+          />
                     <div className="pokemon__container">
                         <div className="all__pokemons">
                             {this.state.isSearch ? Object.keys(this.state.searchPokemons).map((item) =>
@@ -472,43 +472,43 @@ class App extends React.Component {
                                     onElemClick={() => this.fetchPokemonData(this.state.searchPokemons[item].id, this.state.searchPokemons[item].name, this.state.searchPokemons[item].types, this.state.searchPokemons[item].sprites.other.dream_world.front_default ? this.state.searchPokemons[item].sprites.other.dream_world.front_default : this.state.searchPokemons[item].sprites.other['official-artwork'].front_default)}
                                 />) :
                                 (!this.state.isFilter ?
-                                    <motion.ul
-                                        style={{
-                                            display: 'flex',
-                                            flexWrap: 'wrap',
-                                            listStyleType: 'none',
-                                            paddingInlineStart: '0px',
-                                            marginBlockStart: '0px',
-                                            marginBlockEnd: '0px',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                        }}
-                                        initial="hidden"
-                                        animate="visible"
-                                        variants={list}>
-                                        {Object.keys(this.state.allPokemons).map((item) =>
-                                            <motion.li variants={items}>
-                                                <Pokemon
-                                                    key={this.state.allPokemons[item].id}
-                                                    id={this.state.allPokemons[item].id}
-                                                    image={this.state.allPokemons[item].sprites.other.dream_world.front_default ? this.state.allPokemons[item].sprites.other.dream_world.front_default : this.state.allPokemons[item].sprites.other['official-artwork'].front_default}
-                                                    name={this.state.allPokemons[item].name}
-                                                    type={this.state.allPokemons[item].types}
-                                                    onElemClick={() => this.fetchPokemonData(this.state.allPokemons[item].id, this.state.allPokemons[item].name, this.state.allPokemons[item].types, this.state.allPokemons[item].sprites.other.dream_world.front_default ? this.state.allPokemons[item].sprites.other.dream_world.front_default : this.state.allPokemons[item].sprites.other['official-artwork'].front_default)}
-                                                />
-                                            </motion.li>
-                                        )}
-                                    </motion.ul> :
-                                    Object.keys(this.state.filterPokemons).map((item) =>
+                                  <motion.ul
+                                    style={{
+                                      display: 'flex',
+                                      flexWrap: 'wrap',
+                                      listStyleType: 'none',
+                                      paddingInlineStart: '0px',
+                                      marginBlockStart: '0px',
+                                      marginBlockEnd: '0px',
+                                      alignItems: 'center',
+                                      justifyContent: 'center',
+                                    }}
+                                    initial="hidden"
+                                    animate="visible"
+                                    variants={list}>
+                                    {Object.keys(this.state.allPokemons).map((item) => (
+                                      <motion.li key={this.state.allPokemons[item].id} variants={items}>
                                         <Pokemon
-                                            key={this.state.filterPokemons[item].id}
-                                            id={this.state.filterPokemons[item].id}
-                                            image={this.state.filterPokemons[item].sprites.other.dream_world.front_default ? this.state.filterPokemons[item].sprites.other.dream_world.front_default : this.state.filterPokemons[item].sprites.other['official-artwork'].front_default}
-                                            name={this.state.filterPokemons[item].name}
-                                            type={this.state.filterPokemons[item].types}
-                                            onElemClick={() => this.fetchPokemonData(this.state.filterPokemons[item].id, this.state.filterPokemons[item].name, this.state.filterPokemons[item].types, this.state.filterPokemons[item].sprites.other.dream_world.front_default ? this.state.filterPokemons[item].sprites.other.dream_world.front_default : this.state.filterPokemons[item].sprites.other['official-artwork'].front_default)}
+                                          key={this.state.allPokemons[item].id}
+                                          id={this.state.allPokemons[item].id}
+                                          image={this.state.allPokemons[item].sprites.other.dream_world.front_default ? this.state.allPokemons[item].sprites.other.dream_world.front_default : this.state.allPokemons[item].sprites.other['official-artwork'].front_default}
+                                          name={this.state.allPokemons[item].name}
+                                          type={this.state.allPokemons[item].types}
+                                          onElemClick={() => this.fetchPokemonData(this.state.allPokemons[item].id, this.state.allPokemons[item].name, this.state.allPokemons[item].types, this.state.allPokemons[item].sprites.other.dream_world.front_default ? this.state.allPokemons[item].sprites.other.dream_world.front_default : this.state.allPokemons[item].sprites.other['official-artwork'].front_default)}
                                         />
-                                    ))
+                                      </motion.li>
+                                  ))}
+                              </motion.ul> :
+                                  Object.keys(this.state.filterPokemons).map((item) =>
+                                    <Pokemon
+                                      key={this.state.filterPokemons[item].id}
+                                      id={this.state.filterPokemons[item].id}
+                                      image={this.state.filterPokemons[item].sprites.other.dream_world.front_default ? this.state.filterPokemons[item].sprites.other.dream_world.front_default : this.state.filterPokemons[item].sprites.other['official-artwork'].front_default}
+                                      name={this.state.filterPokemons[item].name}
+                                      type={this.state.filterPokemons[item].types}
+                                      onElemClick={() => this.fetchPokemonData(this.state.filterPokemons[item].id, this.state.filterPokemons[item].name, this.state.filterPokemons[item].types, this.state.filterPokemons[item].sprites.other.dream_world.front_default ? this.state.filterPokemons[item].sprites.other.dream_world.front_default : this.state.filterPokemons[item].sprites.other['official-artwork'].front_default)}
+                                    />
+                                  ))
                             }
                         </div>
                     </div>
@@ -517,8 +517,8 @@ class App extends React.Component {
                     </div>}
                     <Footer />
                 </div>}
-            </>
-        )
+        </>
+      )
     }
 }
 
