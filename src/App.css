@@ -19,8 +19,8 @@ html[data-theme=dark] {
 }
 
 @font-face {
-    font-family: 'barcadebrawl';
-    src: url('../src/assets/fonts/BarcadeBrawl.ttf');
+    font-family: 'pixeloperatormono';
+    src: url('../src/assets/fonts/PixelOperatorMono.ttf');
 }
 
 body {
