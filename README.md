@@ -29,10 +29,22 @@ Esto abrirá la aplicación en http://localhost:5173 (puede variar según la con
 
 Este proyecto utiliza las siguientes librerías:
 
-- **react-infinite-scroll-component**: Para implementar la funcionalidad de desplazamiento infinito.
-- **@mui/icons-material**: Iconos de Material UI.
-- **@emotion/react** y **@emotion/styled**: Para estilos en componentes.
-- **framer-motion**: Para animaciones.
-- **react-lazy-load-image-component**: Para carga diferida de imágenes.
-- **@mui/material**: Componentes de Material UI.
+- `@emotion/react`
+- `@emotion/styled`
+- `@fortawesome/fontawesome-free`
+- `@fortawesome/free-solid-svg-icons`
+- `@mui/icons-material`
+- `@mui/material`
+- `axios`
+- `bootstrap`
+- `dotenv`
+- `framer-motion`
+- `react`
+- `react-dom`
+- `react-router-dom`
+
+### Dependencias de Desarrollo
+
+- `eslint`
+- `vite`
 
