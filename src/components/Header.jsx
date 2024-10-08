@@ -1,6 +1,9 @@
 import React from 'react';
 import GitHubIcon from '@mui/icons-material/GitHub';
 import Pokedex from "../assets/images/pokeAPI.png";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
+
 
 class Header extends React.Component {
 
@@ -39,8 +42,8 @@ class Header extends React.Component {
                             <input type="checkbox" name="swich-theme" id="themeSwitch" onClick={this.changeTheme} defaultChecked />
                             <div className="toggle-bg"></div>
                             <div className="toggle-thumb">
-                                <i className="fas fa-sun"></i>
-                                <i className="fas fa-moon"></i>
+                                <FontAwesomeIcon icon={faSun} />
+                                <FontAwesomeIcon icon={faMoon} />
                             </div>
                         </div>
                     </div>

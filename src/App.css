@@ -33,7 +33,7 @@ body {
     -moz-osx-font-smoothing: grayscale;
     transition: background 1s ease;
 }
-
+/*Logo*/
 .poke__logo {
     margin-top: 10px;
     width: 15vw;
@@ -41,12 +41,13 @@ body {
     filter: drop-shadow(5px 0px 0px rgba(0, 0, 0, 0.6));
 }
 
+
 .app__container {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
+    min-height: 90%;
 }
 
 .app__container .loading__text {
@@ -55,7 +56,27 @@ body {
 }
 
 .gif__container {
-    text-align: center;
+  text-align: center;
+  width: 100%; /* Ocupar el 100% del ancho */
+  height: 100vh; /* Ocupar toda la altura de la pantalla */
+  display: flex; /* Centrar el contenido */
+  justify-content: center; /* Centrar horizontalmente */
+  align-items: center; /* Centrar verticalmente */
+}
+/*Loading*/
+.loading__gif {
+  width: 100%; /* Ocupar el 100% del ancho del contenedor */
+  height: 100%; /* Mantener la proporción de la imagen */
+  object-fit: cover;  /* Asegurar que no exceda la altura de la pantalla */
+}
+
+
+.loading__text {
+  position: relative; /* Posicionarlo sobre la imagen */
+  z-index: 1; /* Asegurar que el texto esté por encima de la imagen */
+  color: white; /* Cambiar el color del texto a blanco */
+  font-size: 2rem; /* Ajustar tamaño del texto según preferencia */
+  text-align: center; /* Centrar el texto */
 }
 
 .pokemon__container {
@@ -112,9 +133,7 @@ body {
     margin-top: 5vh;
 }
 
-.loading__gif {
-    width: 15%;
-}
+
 
 .pokeball__box {
     display: flex;
@@ -242,7 +261,7 @@ select {
 
 .switch .toggle-thumb .fa-moon {
     opacity: 1;
-    transform: translateX(-30px);
+    transform: translateX(-5px);
     transition: all 0.55s;
 }
 

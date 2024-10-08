@@ -3,6 +3,7 @@ import GitHubIcon from '@mui/icons-material/GitHub';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import InstagramIcon from '@mui/icons-material/Instagram';
+import Pokedex from "../assets/images/pokeAPI.png";
 import '../styles/footer.css'
 
 class Footer extends React.Component {
@@ -15,7 +16,7 @@ class Footer extends React.Component {
       <footer className="app__footer noselect">
         <div className="footer__content">
           <img 
-            src="/src/assets/images/pokeAPI.png" 
+            src={Pokedex}
             alt="Logo" 
             className="footer__logo" 
           />

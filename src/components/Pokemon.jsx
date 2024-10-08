@@ -65,7 +65,7 @@ const Pokemon = ({ id, image, name, type, onElemClick }) => {
                         <Tooltip TransitionComponent={Zoom} key={type.type.name} title={type.type.name} arrow>
                             <div
                                 className={`poke__type__bg ${type.type.name}`}>
-                                <img src={`${type.type.name}.png`} alt="poke-type"></img>
+                                <img src={`${type.type.name}.svg`} alt="poke-type"></img>
                             </div>
                         </Tooltip>
                     )}

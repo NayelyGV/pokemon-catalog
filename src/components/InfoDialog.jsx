@@ -83,7 +83,7 @@ export default function InfoDialog(props) {
                                 {props.category.map((category) =>
                                     <Tooltip TransitionComponent={Zoom} key={category.type.name} title={category.type.name} arrow>
                                         <div className={`poke__type__bg ${category.type.name}`}>
-                                            <img src={`${category.type.name}.png`} alt="poke-type" />
+                                            <img src={`${category.type.name}.svg`} alt="poke-type" />
                                         </div>
                                     </Tooltip>
                                 )}
@@ -196,7 +196,7 @@ export default function InfoDialog(props) {
 InfoDialog.defaultProps = {
     open: false,
     name: "Unknown",
-    img: "default-image.png",
+    img: "default-image.svg",
     description: "No description available",
     category: [],
     height: 0,
