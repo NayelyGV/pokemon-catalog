@@ -22,11 +22,11 @@ html[data-theme=dark] {
     width: 90%;
     display: flex;
     flex-direction: row;
-    flex-wrap: wrap; /* Permitir que los elementos se muevan a la siguiente línea */
-    justify-content: space-between; /* Distribuir espacio entre elementos */
-    gap: 1rem; /* Espacio uniforme entre elementos */
-    overflow: hidden; /* Evitar scroll horizontal */
-	margin: 0 auto;
+    flex-wrap: wrap; 
+    justify-content: space-between; 
+    gap: 1rem; 
+    overflow: hidden; 
+    margin: 0 auto;
 }
 
 /* Imágenes y Contenido */
@@ -38,17 +38,17 @@ html[data-theme=dark] {
     border-radius: 1rem;
     background: rgba(255, 255, 255, 0.78);
     padding: 1.25rem;
-    width: 100%; /* Cambiado a 100% para que ocupe el ancho completo */
-    max-width: 100%; /* Máximo ancho */
-    aspect-ratio: 1; /* Mantener relación de aspecto cuadrada */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Añadir sombra */
-    margin: 0 auto; /* Margen uniforme */
+    width: 100%; 
+    max-width: 100%; 
+    aspect-ratio: 1; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: 0 auto; 
 }
 
 .info__container__img img {
-    width: 100%; /* Cambiado a porcentaje */
-    max-width: 100%; /* Máximo ancho */
-    height: auto; /* Altura automática */
+    width: 100%; 
+    max-width: 100%; 
+    height: auto; 
     border-radius: 1.2rem;
     display: block;
 }
@@ -57,64 +57,74 @@ html[data-theme=dark] {
 .info__container__data {
     display: flex;
     flex-direction: column;
-    width: 100%; /* Ancho completo */
+    width: 100%; 
     max-width: 100%;
-    margin: 0 auto; /* Centrado automático */
+    margin: 0 auto; 
 }
 
 /* Texto */
 .pokemon__name {
     font-size: 5vw;
     text-transform: capitalize;
-    font-family: 'Press Start 2P', cursive; /* Asegurarse de que la fuente sea clara */
-    text-align: center; /* Centrar el texto */
+    font-family: 'Press Start 2P', cursive; 
+    text-align: center; 
 }
 
 .pokemon__id {
     color: var(--pokenumber);
     font-family: 'Teko', sans-serif;
     font-weight: 400;
-    font-size: 4vw; /* Proporcional al tamaño de la ventana */
-    margin: 0; /* Eliminar márgenes para evitar espacio arriba */
-    padding: 0; /* Sin padding adicional */
-    padding-bottom: 1rem; /* Espacio solo en la parte inferior */
-    text-align: center; /* Centrar el texto horizontalmente */
+    font-size: 4vw; 
+    margin: 0; 
+    padding: 0; 
+    padding-bottom: 1rem; 
 }
 
 /* Encabezados de Datos */
 .info__container__headings,
-.info__container__data__abilities {
+.ability__list {
     display: flex;
     flex-direction: column;
-    width: 100%; /* Ancho adaptativo */
+    width: 100%; 
     max-width: 100%;
-    margin: 0 auto; /* Cambiado a unidades relativas */
+    margin: 0 auto; 
     font-family: 'VT323', monospace;
-    font-size: 3vw; /* Tamaño menor para encabezados de habilidades y otros */
+    font-size: 3vw; 
     font-weight: 600;
-    margin-bottom: 0.625rem; /* Espaciado para claridad */
+    margin-bottom: 0.625rem; 
 }
 
+.info__container__data__abilities {
+	display: flex;
+    flex-direction: column; /* Asegura que el contenido esté en columna */
+    align-items: center; /* Alinea al centro */
+    width: 100%;
+    gap: 1rem; /* Espacio entre el encabezado y la lista de habilidades */
+}
+
+
 /* Texto Adicional */
+.desc, 
+.ability__list__bg,
 .info__container__data__data {
-    display: flex; /* Activa el modelo Flexbox */
-    width: 100%; /* Ancho adaptativo */
-    flex-direction: row; /* Organiza los elementos en una fila */
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan si no hay suficiente espacio */
-    gap: 1rem; /* Espacio entre los elementos */
-    align-items: center; /* Alinea los elementos hijos verticalmente en el centro */
-    justify-content: space-between; /* Distribuye los elementos con espacio entre ellos */
-    background-color: rgba(255, 255, 255, 0.25); /* Fondo semi-transparente */
-    padding: 0.625rem; /* Espacio interno alrededor del contenido */
-    border-radius: 1rem; /* Redondea las esquinas */
-    margin: 0 auto; /* Espacio superior */
+    display: flex; 
+    width: 100%; 
+    flex-direction: row; 
+    flex-wrap: wrap; 
+    gap: 1rem; 
+    align-items: center; 
+    justify-content: space-between; 
+    background-color: rgba(255, 255, 255, 0.25); 
+    padding: 0.625rem; 
+    border-radius: 1rem; 
+    margin: 0 auto; 
 }
 
 /* Asegurar que las columnas de estadística tengan el mismo tamaño */
 .info__container__stat__columns {
-    flex: 1; /* Hace que todas las columnas ocupen el mismo ancho */
-    min-width: 135px; /* Ancho mínimo */
-    max-width: 150px; /* Ancho máximo para que no se desborden */
+    flex: 1; 
+    min-width: 135px; 
+    max-width: 150px; 
 }
 
 /* Componentes de Diálogo */
@@ -123,85 +133,40 @@ html[data-theme=dark] {
     border-radius: 1rem;
     box-shadow: 0 10px 20px rgba(175, 136, 136, 0.29), 0 6px 6px rgba(0, 0, 0, 0.43);
 }
+
 .info__container__data__header {
-    width: 100%; /* Cambiado a porcentaje */
     display: flex;
+	flex-direction: column;
     align-items: center;
-    justify-content: space-between;
-    margin-bottom: 0.625rem; /* Espaciado entre encabezados y contenido */
+    width: 100%;
+    padding: 1rem 0;
+    gap: 1.5rem; /* Espacio entre las secciones */
 }
 
 .info__container__data__type {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 1.25rem; /* Espacio entre elementos */
+    gap: 1.25rem; 
 }
 
 .info__container__data__type img {
-    height: 1.25rem; /* Cambiado a unidades relativas */
-    width: 1.25rem; /* Cambiado a unidades relativas */
+    height: 1.25rem; 
+    width: 1.25rem; 
 }
 
-.info__container__headings,
-.info__container__data__abilities {
+/* Dimensiones y género */
+.dimensions, 
+.gender__container {
     display: flex;
-    flex-direction: column;
-    width: 100%; /* Ancho adaptativo */
-    max-width: 100%;
-    margin: 0 auto; /* Cambiado a unidades relativas */
-    font-family: 'VT323', monospace;
-    font-size: 2vw; /* Proporcional al tamaño de la ventana */
-    font-weight: 600;
-    margin-bottom: 0.625rem; /* Espaciado para claridad */
-}
-
-.info__container__data__data {
-    display: flex; /* Activa el modelo Flexbox */
-    width: 100%; /* Ancho adaptativo */
-    flex-direction: row; /* Organiza los elementos en una fila */
-    flex-wrap: wrap; /* Permite que los elementos se envuelvan si no hay suficiente espacio */
-    gap: 1rem; /* Espacio entre los elementos (ajustado a 1rem para mayor separación) */
-    align-items: center; /* Alinea los elementos hijos verticalmente en el centro */
-    justify-content: space-between; /* Distribuye los elementos con espacio entre ellos */
-    background-color: rgba(255, 255, 255, 0.25); /* Fondo semi-transparente */
-    padding: 0.625rem; /* Espacio interno alrededor del contenido */
-    border-radius: 1rem; /* Redondea las esquinas */
-    margin: 0 auto; /* Espacio superior */
-}
-
-/* Asegurar que las columnas de estadística tengan el mismo tamaño */
-.info__container__stat__columns {
-    flex: 1; /* Hace que todas las columnas ocupen el mismo ancho */
-    min-width: 135px; /* Ancho mínimo */
-    max-width: 150px; /* Ancho máximo para que no se desborden */
-}
-
-/* Componentes de Diálogo */
-.MuiDialog-paperFullWidth {
-    width: 63%;
-    border-radius: 1rem;
-    box-shadow: 0 10px 20px rgba(175, 136, 136, 0.29), 0 6px 6px rgba(0, 0, 0, 0.43);
-}
-
-.MuiDialog-container {
-    background-color: var(--bgcolor);
-    background-image: var(--bggradient);
-}
-
-.MuiBackdrop-root {
-    background-color: rgba(0, 0, 0, 0);
-}
-
-/* Dimensiones */
-.info__container__data__dimensions {
-    display: flex;
-    gap: 0 30px;
-    width: 100%; /* Ancho adaptativo */
+    flex-direction: column; 
+    gap: 0.2rem; 
+    width: 50%; 
     margin: 0 auto; 
+    text-align: center; 
 }
 
-.info__container__stat__columns__name {
+.info__container__data__columns__name {
     text-transform: uppercase;
     color: rgb(128, 126, 127);
 }
@@ -213,11 +178,11 @@ html[data-theme=dark] {
 
 .dialog__content {
     font-family: 'VT323', monospace;
-    font-size: 1.3125rem; /* 21px */
+    font-size: 1.3125rem; 
 }
 
 .close__btn {
-    width: 1.875rem !important; /* 30px */
+    width: 1.875rem !important; 
 }
 
 .ability {
@@ -228,7 +193,7 @@ html[data-theme=dark] {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    gap: 0.1875rem; /* 3px */
+    gap: 0.1875rem; 
 }
 
 .noselect {
@@ -236,28 +201,28 @@ html[data-theme=dark] {
 }
 
 .evolution__box {
-    display: flex; /* Alinea las evoluciones horizontalmente */
-    justify-content: center; /* Centra los elementos en la evolución */
-    gap: 20px; /* Espacio entre cada evolución */
+    display: flex; 
+    justify-content: center; 
+    gap: 20px; 
 }
 
 .evolution__sub__box {
     display: flex;
-    flex-direction: column; /* Apila los elementos verticalmente */
-    align-items: center; /* Centra horizontalmente todos los elementos */
+    flex-direction: column; 
+    align-items: center; 
 }
 
 .evolution__imgarrow {
-    display: flex; /* Permite que la imagen y la flecha se alineen en fila */
-    align-items: center; /* Alinea la imagen y la flecha en el mismo eje */
+    display: flex; 
+    align-items: center; 
 }
 
 .evolution__img__div {
-    height: 7.0625rem; /* Ajusta la altura según sea necesario */
-    width: 7.0625rem; /* Ajusta el ancho según sea necesario */
+    height: 7.0625rem; 
+    width: 7.0625rem; 
     display: flex;
     border-radius: 50%;
-    box-shadow: 0 5px 15px 4px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 5px 15px 4px rgba(131, 129, 129, 0.3);
     align-items: center;
     justify-content: center;
     transition: all 0.35s;
@@ -265,115 +230,83 @@ html[data-theme=dark] {
 
 .evo__name {
     text-transform: capitalize;
-    margin: 0.7rem 0; /* Espacio entre el nombre y la imagen */
-    width: 100%; /* Ocupa todo el ancho del contenedor padre */
-    text-align: left; /* Alinea el texto a la izquierda */
-    padding-left: 15%; /* Agrega un espacio de 5px a la izquierda */}
+    margin: 0.7rem 0; 
+    width: 100%; 
+    text-align: left; 
+    padding-left: 15%; 
+}
 
 .evo__arrow {
-    margin-left: 10px; /* Espacio entre la flecha y la imagen */
+    margin-left: 10px; 
 }
-
 
 .evolution__box .evo_img {
-    width: 5rem; /* 80px */
-    height: 5rem; /* 80px */
-    margin: auto;
-    display: flex;
-    cursor: pointer;
+    width: 5rem; 
+    height: 5rem; 
+    margin: 0 auto; 
 }
 
-.evolution__img__div {
-    height: 7.0625rem; /* 113px */
-    width: 7.0625rem; /* 113px */
-    display: flex;
-    border-radius: 50%;
-    box-shadow: 0 5px 15px 4px rgba(0, 0, 0, 0.3);
-    align-items: center;
-    justify-content: center;
-    transition: all 0.35s;
-    margin-top: 3vh;
-}
-
-.evolution__poke__name {
-    text-transform: capitalize;
-    margin: 0.625rem 0; /* 10px */
-}
-
-.arrow__right {
-    font-size: 1.75rem;
-    margin: 0 0.625rem; /* 10px */
-}
-
-.MuiDialogContent-root:first-child {
-    padding: 0.625rem; /* 10px */
-}
-
-.ability__list {
-    display: flex;
-    gap: 0 30px;
-    padding-inline-start: 1em;
-}
-
-.ability__list__bg {
-    background-color: rgba(255, 255, 255, 0.25);
-    padding: 0.3125rem; /* 5px */
-    border-radius: 1rem;
-    margin-top: 0.5rem;
-}
-
-.MuiTooltip-tooltip {
-    font-size: 0.9375rem !important; /* 15px */
-}
-
-.separator {
-    border: 0;
-    border-radius: 20px;
-    height: 1px;
-    background-color: #fff;
-    margin: 1rem 0;
-}
-.transparency__div {
-    background: rgba(255, 255, 255, 0.25);
-    height: 7.0625rem; /* 113px */
-    width: 7.0625rem; /* 113px */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.desc {
-    background-color: rgba(255, 255, 255, 0.25);
-    padding: 0.625rem; /* 10px */
-    border-radius: 1rem;
-    margin-top: 0.5rem;
-}
 /* Media Queries para Responsividad */
 @media (max-width: 768px) {
-    .info__container__data__header {
-        flex-direction: column; /* Cambiar a columna en pantallas pequeñas */
-        align-items: flex-start; /* Alinear al inicio */
+    .info__container {
+        flex-direction: column; /* Cambia a columna para pantallas más pequeñas */
+        align-items: center; /* Centrar los elementos en pantallas pequeñas */
     }
 
-    .info__container__data__data {
-        flex-direction: column; /* Cambiar a columna para pantallas pequeñas */
-        gap: 0.5rem; /* Reducir espacio en pantallas pequeñas */
+    .info__container__img, 
+    .info__container__data {
+        width: 100%; /* Asegurar que ocupen el ancho completo */
+        margin: 0; /* Eliminar márgenes */
     }
 
-    .info__container__data__headings {
-        font-size: 4vw; /* Proporcional al tamaño de la ventana */
+    .pokemon__name {
+        font-size: 6vw; /* Aumentar tamaño de texto en dispositivos más pequeños */
     }
 
-    .info__container__data__abilities {
-        font-size: 3.5vw; /* Proporcional al tamaño de la ventana */
+    .pokemon__id {
+        font-size: 5vw; /* Aumentar tamaño de texto en dispositivos más pequeños */
+    }
+
+    .info__container__headings{
+        font-size: 4vw; /* Aumentar tamaño de encabezados en dispositivos más pequeños */
+    }
+ 
+	.info__container__data__data {
+        flex-direction: column; /* Cambia a columna en pantallas pequeñas */
+        align-items: center; /* Centrar elementos en columnas */
     }
 
     .info__container__stat__columns {
-        min-width: auto; /* Permitir que las columnas se ajusten mejor */
-        max-width: none; /* Remover límite superior */
+        min-width: 100%; /* Ancho completo en pantallas pequeñas */
+        max-width: 100%; /* Ancho completo en pantallas pequeñas */
     }
 
-    .info__container__data {
-        padding: 0 1rem; /* Espaciado interno */
+    .dimensions, 
+    .gender__container {
+        width: 100%; /* Ancho completo en pantallas pequeñas */
+    }
+
+    .evolution__box {
+        flex-direction: column; /* Cambia a columna para evoluciones en pantallas pequeñas */
+        gap: 10px; /* Espacio reducido entre evoluciones */
+    }
+
+    .evolution__img__div {
+        height: 5rem; /* Ajustar la altura de las imágenes de evolución */
+        width: 5rem; /* Ajustar el ancho de las imágenes de evolución */
+    }
+}
+
+@media (max-width: 480px) {
+    .pokemon__name {
+        font-size: 7vw; /* Aumentar aún más el tamaño de texto */
+    }
+
+    .pokemon__id {
+        font-size: 6vw; /* Aumentar aún más el tamaño de texto */
+    }
+
+    .info__container__headings {
+        font-size: 5vw; /* Aumentar aún más el tamaño de encabezados */
     }
 }

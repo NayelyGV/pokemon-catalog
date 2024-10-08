@@ -90,14 +90,20 @@ export default function InfoDialog(props) {
                             </div>
                             <div className="dimensions">
                                 <p>
-                                    <span className="info__container__headings" style={{ fontSize: "20px" }}>Height</span> {`${props.height / 10} m/${`${Math.floor(props.height / 10 * 3.28)}'${Math.round(((props.height / 10 * 3.28) % 1) * 12)}"`} ` }
+                                    <span className="info__container__headings">Height</span> 
+                                    {`${props.height / 10} m/${`${Math.floor(props.height / 10 * 3.28)}'${Math.round(((props.height / 10 * 3.28) % 1) * 12)}"`} ` }
                                 </p>
                                 <p>
-                                    <span className="info__container__headings" style={{ fontSize: "20px" }}>Weight</span>{` ${(props.weight / 10).toFixed(1)} kg/${(props.weight * 0.2205).toFixed(1)} lbs`}
+                                    <span className="info__container__headings">Weight</span>
+                                    {` ${(props.weight / 10).toFixed(1)} kg/${(props.weight * 0.2205).toFixed(1)} lbs`}
                                 </p>
                             </div>
                             <div className="gender__container">
-                                {props.genderRate === -1 ? "Genderless" : fetchGenderRate(props.genderRate)}
+                                <p>
+                                    <span className="info__container__headings">Gender %</span> 
+                                    {props.genderRate === -1 ? "Genderless" : fetchGenderRate(props.genderRate)}
+                                </p>
+                                
                             </div>
                         </div>
                         <div className="info__container__data">
