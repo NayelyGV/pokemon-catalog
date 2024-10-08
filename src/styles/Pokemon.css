@@ -62,8 +62,12 @@ html[data-theme=dark] {
     transform: scale(1.1);
 }
 
+.favorite__icon {
+    margin-right: 1.1vw; /* Ajusta este valor según necesites */
+    cursor: pointer; /* Para mostrar que es clickable */
+}
 .info__icon {
-    margin-right: 15px;
+    margin-right: 8vw;
     margin-top: -4px;
     font-size: 25px;
     color: var(--info);
@@ -82,7 +86,7 @@ h3 {
 
 .thumbnail__container .poke__number {
     border-radius: 1rem;
-    padding: 0.2rem 0.4rem;
+    padding: 0.2rem 0.9rem;
     font-weight: 400;
     font-size: 35px;
     color: var(--pokenumber);
@@ -99,10 +103,10 @@ h3 {
 }
 
 .card__header {
-    width: -webkit-fill-available;
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 }
 
 .poke__type {
