@@ -6,25 +6,25 @@ import { faMoon, faSun } from '@fortawesome/free-solid-svg-icons';
 
 
 class Header extends React.Component {
-
+    constructor(props) {
+        super(props);
+        // Inicializa el estado con isChecked dependiendo del tema actual
+        const initialTheme = document.documentElement.getAttribute('data-theme') || 'dark'; // Si no hay tema, por defecto es 'light'
+        document.documentElement.setAttribute('data-theme', initialTheme); // Asegurarse de que el tema inicial se establece
+        this.state = {
+            isChecked: initialTheme === 'dark' // Comprobar el tema actual al inicio
+        };
+    }
     changeTheme = () => {
-
         const currentTheme = document.documentElement.getAttribute('data-theme');
-        let targetTheme = "light";
+        const targetTheme = currentTheme === "light" ? "dark" : "light";
+        
+        // Actualiza el estado y el atributo del tema
+        this.setState({
+            isChecked: targetTheme === "dark" // Actualiza el estado según el nuevo tema
+        });
 
-        if (currentTheme === "light") {
-            targetTheme = "dark";
-
-            this.setState({
-                isChecked: true,
-            })
-
-        } else {
-            this.setState({
-                isChecked: false,
-            })
-        }
-        document.documentElement.setAttribute('data-theme', targetTheme)
+        document.documentElement.setAttribute('data-theme', targetTheme);
     }
 
     openGithub = () => {
