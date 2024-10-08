@@ -14,6 +14,13 @@ Para instalar y ejecutar el proyecto, sigue estos pasos:
 ```bash
    npm install
 ```   
+## Configuración
+
+Crea un archivo `.env` en la raíz del proyecto y añade la siguiente variable de entorno:
+
+```bash
+   VITE_POKEAPI_BASE_URL=https://pokeapi.co/api/v2
+```   
 
 ## Ejecución
 
