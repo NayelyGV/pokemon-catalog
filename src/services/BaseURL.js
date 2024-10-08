@@ -1,7 +1,7 @@
-import axios from "axios";
+import axios from 'axios';
+
 const BaseUrl = axios.create({
-    baseURL: 'https://pokeapi.co/api/v2/pokemon'
+    baseURL: import.meta.env.VITE_POKEAPI_BASE_URL
 });
 
 export default BaseUrl;
-
