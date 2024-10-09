@@ -8,33 +8,59 @@ import '../styles/footer.css'
 
 class Footer extends React.Component {
   openLink = (url) => {
-    window.open(url);
+    window.open(url),'_blank', 'noopener,noreferrer';
   }
 
   render() {
+    const socialLinks = [
+      {
+        url: "https://facebook.com",
+        icon: <FacebookIcon />,
+        label: "Facebook"
+      },
+      {
+        url: "https://instagram.com",
+        icon: <InstagramIcon />,
+        label: "Instagram"
+      },
+      {
+        url: "https://www.linkedin.com/in/nayely-giles-valdez-74b034163/",
+        icon: <LinkedInIcon />,
+        label: "LinkedIn"
+      },
+      {
+        url: "https://github.com/NayelyGV/pokemon-catalog",
+        icon: <GitHubIcon />,
+        label: "GitHub"
+      }
+    ];
+
     return (
       <footer className="app__footer noselect">
         <div className="footer__content">
-          <img 
-            src={Pokedex}
-            alt="Logo" 
-            className="footer__logo" 
-          />
-          <p className="footer__text">© 2024 Pokémon Catalog </p>
-          <div className="social__icons">
-            <div onClick={() => this.openLink("https://github.com/NayelyGV/pokemon-catalog")} className="social__icon">
-              <GitHubIcon />
-            </div>
-            <div onClick={() => this.openLink("https://www.linkedin.com/in/nayely-giles-valdez-74b034163/")} className="social__icon">
-              <LinkedInIcon />
-            </div>
-            <div onClick={() => this.openLink("https://facebook.com")} className="social__icon">
-              <FacebookIcon />
-            </div>
-            <div onClick={() => this.openLink("https://instagram.com")} className="social__icon">
-              <InstagramIcon />
+          <div className="footer__column">
+            <img 
+              src={Pokedex}
+              alt="Logo de Pokémon Catalog" 
+              className="footer__logo" 
+            />
+            <p className="footer__text">© 2024 Pokémon Catalog </p>
+            <div className="social__icons">
+              {socialLinks.map(({ url, icon, label }) => (
+                <button 
+                  key={label} 
+                  onClick={() => this.openLink(url)} 
+                  className="social__icon"
+                  aria-label={label}
+                >
+                  {icon}
+                </button>
+              ))}
             </div>
           </div>
+          
+          <div className="footer__column"></div>
+          <div className="footer__column"></div>
         </div>
       </footer>
     );
