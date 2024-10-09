@@ -1,7 +1,7 @@
 :root {
     --header-bg: #ffffff; /* Fondo del header */
-    --header-color: #333333; /* Color del texto */
-    --header-bg-dark: #333333; /* Fondo del header en modo oscuro */
+    --header-color: #ded2d2; /* Color del texto */
+    --header-bg-dark: #070707; /* Fondo del header en modo oscuro */
     --header-color-dark: #ffffff; /* Color del texto en modo oscuro */
     --button-hover-color: #ff0000; /* Color al pasar el mouse */
     --item-hover-color: #f0f0f0; /* Color al pasar el mouse en el menú */
@@ -12,33 +12,32 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 15px 30px; /* Ajusta el padding */
     background-color: var(--header-bg);
     color: var(--header-color);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
     position: relative; /* Necesario para el menú */
     z-index: 100; /* Asegúrate que esté sobre otros elementos */
 }
 
 /* Logo */
 .poke__logos {
-    display: flex;
-    align-items: center;
-}
-
-.poke__logo {
-    width: 120px; /* Ajusta el tamaño */
+    width: 80px;
     height: auto;
 }
 
+
 /* Botones del header */
+.header__buttons {
+    display: flex;
+}
 .header__button {
-    background: transparent;
+    background: none;
     color: var(--header-color);
     font-size: 18px; /* Tamaño del texto */
-    margin: 0 20px; /* Espaciado entre botones */
+    margin: 0 10px; /* Espaciado entre botones */
     cursor: pointer;
-    transition: color 0.3s;
+    border: none;
+    
 }
 
 .header__button:hover {
@@ -48,23 +47,18 @@
 /* Icono de GitHub */
 .github__icon {
     cursor: pointer;
-    font-size: 26px; /* Ajusta el tamaño */
+    font-size: 20px; /* Ajusta el tamaño */
     margin-left: 20px; /* Espaciado desde el último botón */
 }
 
 /* Estilos del toggle */
 .switch {
-    display: flex;
-    align-items: center;
+    margin-left: 20px;
 }
 
-.toggle {
-    position: relative;
-}
-
-.toggle input {
-    opacity: 0;
-    position: absolute;
+.menu__toggle {
+    display: none;
+    cursor: pointer;
 }
 
 /* Estilo del fondo del toggle */
@@ -138,17 +132,21 @@
         font-size: 26px; /* Ajusta el tamaño */
     }
 
-    .header__button {
-        display: none; /* Ocultar botones en móvil */
+    .header__buttons, .github__icon, .switch {
+        display: none;
     }
 
-    .toggle {
-        margin-left: auto; /* Alinear el toggle a la derecha */
+    
+    .menu.active {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
     }
 
-    .menu {
-        width: 100%; /* Ancho completo */
+    .menu__item {
+        padding: 15px 0;
     }
+
 }
 
 /* Cambiar colores en modo oscuro */
