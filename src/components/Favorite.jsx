@@ -1,11 +1,11 @@
 import React from 'react';
 import Pokemon from "./Pokemon"; // Asegúrate de tener la ruta correcta
 
-const Favorite = ({ favorites, toggleFavorite }) => {
+const Favorite = ({ favorite, toggleFavorite }) => {
     return (
-        <div className="favorites">
+        <div className="favorite">
             <h2>Favoritos</h2>
-            <div className="favorites__container">
+            <div className="favorite__container">
                 {favorites.length > 0 ? (
                     favorites.map((fav) => (
                         <Pokemon
