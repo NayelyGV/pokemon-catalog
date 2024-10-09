@@ -119,15 +119,6 @@ body {
   text-transform: capitalize;
 }
 
-.app__header {
-  display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 20px; /* Aumentar el padding */
-    background-color: var(--bgcolor); /* Cambiar color de fondo */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Agregar sombra */
-}
 
 .pokeball__box {
   display: flex;
@@ -135,16 +126,6 @@ body {
   margin-right: 20px;
 }
 
-/* Logo */
-.poke__logo {
-  width: 100%; /* Aumentar el tamaño del logo */
-  filter: drop-shadow(5px 0px 0px rgba(0, 0, 0, 0.6));
-  transition: transform 0.3s ease;
-}
-
-.poke__logo:hover {
-  transform: scale(1.2);
-}
 
 
 /* Controles de filtro */
@@ -279,8 +260,9 @@ body {
 .github__icon {
   cursor: pointer;
   transition: transform 0.3s ease;
-  font-size: 3rem;
+  font-size: 35px;
   color: var(--colorPrimary);
+  
 }
 
 .github__icon svg {
@@ -296,8 +278,7 @@ label {
   color: var(--filterHeading);
 }
 
-.switch,
-.github__icon {
+.switch{
   width: 5vw;
   margin: 0 6vw;
 }
@@ -320,8 +301,7 @@ select {
 
 /* Estilos responsivos */
 @media screen and (max-width: 767px) {
-  .loading__gif,
-  .poke__logo {
+  .loading__gif {
       width: 35%;
   }
 

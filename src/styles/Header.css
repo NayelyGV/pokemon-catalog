@@ -1,43 +1,62 @@
 :root {
     --header-bg: #ffffff; /* Fondo del header */
-    --header-color: #ded2d2; /* Color del texto */
+    --header-color: #151414; /* Color del texto */
     --header-bg-dark: #070707; /* Fondo del header en modo oscuro */
     --header-color-dark: #ffffff; /* Color del texto en modo oscuro */
-    --button-hover-color: #ff0000; /* Color al pasar el mouse */
+    --button-hover-color: #00e1ff; /* Color al pasar el mouse */
     --item-hover-color: #f0f0f0; /* Color al pasar el mouse en el menú */
 }
 
 /* Estilos generales del header */
 .app__header {
     display: flex;
+    justify-content: space-between; /* Espacio entre columnas */
     align-items: center;
-    justify-content: space-between;
     background-color: var(--header-bg);
     color: var(--header-color);
-    box-shadow: none;
-    position: relative; /* Necesario para el menú */
-    z-index: 100; /* Asegúrate que esté sobre otros elementos */
+    padding: 10px 20px;
+    position: relative;
+    z-index: 100;
+}
+
+/* Divisiones en columnas */
+.header__column {
+    display: flex;
+    align-items: center; /* Alinear elementos verticalmente */
+}
+
+.header__left {
+    margin-left: 5vw;
+    gap: 5vw;
+}
+
+.header__right {
+    margin-right: 0.05vw;
+}
+
+.header__buttons {
+    display: flex;
+    align-items: center;
+    gap: 20px; /* Espacio entre los botones */
 }
 
 /* Logo */
-.poke__logos {
-    width: 80px;
-    height: auto;
+.poke__logo {
+    width: 110px;
 }
 
+.poke__logo:hover {
+    transform: scale(1.2);
+  }
 
 /* Botones del header */
-.header__buttons {
-    display: flex;
-}
 .header__button {
     background: none;
     color: var(--header-color);
-    font-size: 18px; /* Tamaño del texto */
-    margin: 0 10px; /* Espaciado entre botones */
+    font-size: 18px;
     cursor: pointer;
     border: none;
-    
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .header__button:hover {
@@ -47,24 +66,25 @@
 /* Icono de GitHub */
 .github__icon {
     cursor: pointer;
-    font-size: 20px; /* Ajusta el tamaño */
-    margin-left: 20px; /* Espaciado desde el último botón */
+    font-size: 35px; /* Asegúrate de que el tamaño sea adecuado */
+    width: 5vw;
+    margin-left: -10px;
 }
 
 /* Estilos del toggle */
 .switch {
     margin-left: 20px;
+    display: flex;
+    align-items: center;
 }
 
-.menu__toggle {
-    display: none;
-    cursor: pointer;
+.toggle {
+    position: relative;
 }
 
-/* Estilo del fondo del toggle */
 .toggle-bg {
-    width: 60px; /* Tamaño del toggle */
-    height: 30px; /* Tamaño del toggle */
+    width: 60px;
+    height: 30px;
     background-color: #ccc;
     border-radius: 50px;
     cursor: pointer;
@@ -72,8 +92,8 @@
 }
 
 .toggle-thumb {
-    width: 28px; /* Tamaño de la parte que se mueve */
-    height: 28px; /* Tamaño de la parte que se mueve */
+    width: 28px;
+    height: 28px;
     background-color: #fff;
     border-radius: 50%;
     position: absolute;
@@ -83,82 +103,83 @@
 }
 
 .toggle input:checked + .toggle-bg {
-    background-color: #4caf50; /* Color del toggle activado */
+    background-color: #4caf50;
 }
 
 .toggle input:checked + .toggle-bg .toggle-thumb {
-    left: 32px; /* Ajusta el desplazamiento */
+    left: 32px;
 }
 
-/*  Menú móvil */
+/* Menú móvil */
 .menu__toggle {
-    display: none; /* Ocultar por defecto en escritorio */
+    display: none;
 }
 
-.menu {
-    display: none; /* Menú oculto por defecto */
-    position: absolute; /* Para posicionar el menú */
-    top: 100%; /* Justo debajo del header */
+.navbar {
+    display: none;
+    position: absolute;
+    top: 100%;
     left: 0;
     background-color: var(--header-bg);
-    width: 100%; /* Ancho completo */
+    width: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 99; /* Sobre el resto del contenido */
-    text-align: center; /* Centrar el texto */
+    z-index: 99;
+    text-align: center;
 }
 
-.menu.active {
-    display: flex; /* Mostrar menú cuando está activo */
+.navbar.active {
+    display: flex;
     flex-direction: column;
 }
 
-.menu__item {
-    padding: 15px 30px; /* Espaciado interno */
+.navbar__item {
+    padding: 15px 30px;
     cursor: pointer;
-    transition: background-color 0.3s;
-    color: var(--header-color); /* Color del texto del menú */
+    transition: background-color 0.3s, color 0.3s;
+    color: var(--header-color);
 }
 
-.menu__item:hover {
+.navbar__item:hover {
     background-color: var(--item-hover-color);
+    color: var(--button-hover-color);
 }
 
 /* Estilos responsivos */
 @media (max-width: 768px) {
     .menu__toggle {
-        display: block; /* Mostrar icono de menú en móvil */
+        display: block;
         cursor: pointer;
-        margin-left: auto; /* Alinear a la derecha */
-        font-size: 26px; /* Ajusta el tamaño */
+        margin-left: auto;
+        margin-top: auto;
+        font-size: 26px;
     }
 
-    .header__buttons, .github__icon, .switch {
+    .header__buttons,
+    .switch__desk {
         display: none;
     }
 
-    
-    .menu.active {
+    .header__right {
+        flex-direction: row-reverse;
+    }
+
+    .navbar.active {
         display: flex;
         flex-direction: column;
         text-align: center;
     }
-
-    .menu__item {
-        padding: 15px 0;
-    }
-
 }
 
-/* Cambiar colores en modo oscuro */
+/* Modo oscuro */
 [data-theme='dark'] .app__header {
     background-color: var(--header-bg-dark);
     color: var(--header-color-dark);
 }
 
-[data-theme='dark'] .menu {
+[data-theme='dark'] .navbar {
     background-color: var(--header-bg-dark);
 }
 
-[data-theme='dark'] .menu__item {
+[data-theme='dark'] .navbar__item {
     color: var(--header-color-dark);
 }
