@@ -1,0 +1,166 @@
+:root {
+    --header-bg: #ffffff; /* Fondo del header */
+    --header-color: #333333; /* Color del texto */
+    --header-bg-dark: #333333; /* Fondo del header en modo oscuro */
+    --header-color-dark: #ffffff; /* Color del texto en modo oscuro */
+    --button-hover-color: #ff0000; /* Color al pasar el mouse */
+    --item-hover-color: #f0f0f0; /* Color al pasar el mouse en el menú */
+}
+
+/* Estilos generales del header */
+.app__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px; /* Ajusta el padding */
+    background-color: var(--header-bg);
+    color: var(--header-color);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative; /* Necesario para el menú */
+    z-index: 100; /* Asegúrate que esté sobre otros elementos */
+}
+
+/* Logo */
+.poke__logos {
+    display: flex;
+    align-items: center;
+}
+
+.poke__logo {
+    width: 120px; /* Ajusta el tamaño */
+    height: auto;
+}
+
+/* Botones del header */
+.header__button {
+    background: transparent;
+    color: var(--header-color);
+    font-size: 18px; /* Tamaño del texto */
+    margin: 0 20px; /* Espaciado entre botones */
+    cursor: pointer;
+    transition: color 0.3s;
+}
+
+.header__button:hover {
+    color: var(--button-hover-color);
+}
+
+/* Icono de GitHub */
+.github__icon {
+    cursor: pointer;
+    font-size: 26px; /* Ajusta el tamaño */
+    margin-left: 20px; /* Espaciado desde el último botón */
+}
+
+/* Estilos del toggle */
+.switch {
+    display: flex;
+    align-items: center;
+}
+
+.toggle {
+    position: relative;
+}
+
+.toggle input {
+    opacity: 0;
+    position: absolute;
+}
+
+/* Estilo del fondo del toggle */
+.toggle-bg {
+    width: 60px; /* Tamaño del toggle */
+    height: 30px; /* Tamaño del toggle */
+    background-color: #ccc;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toggle-thumb {
+    width: 28px; /* Tamaño de la parte que se mueve */
+    height: 28px; /* Tamaño de la parte que se mueve */
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    top: 1px;
+    left: 1px;
+    transition: left 0.3s;
+}
+
+.toggle input:checked + .toggle-bg {
+    background-color: #4caf50; /* Color del toggle activado */
+}
+
+.toggle input:checked + .toggle-bg .toggle-thumb {
+    left: 32px; /* Ajusta el desplazamiento */
+}
+
+/*  Menú móvil */
+.menu__toggle {
+    display: none; /* Ocultar por defecto en escritorio */
+}
+
+.menu {
+    display: none; /* Menú oculto por defecto */
+    position: absolute; /* Para posicionar el menú */
+    top: 100%; /* Justo debajo del header */
+    left: 0;
+    background-color: var(--header-bg);
+    width: 100%; /* Ancho completo */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 99; /* Sobre el resto del contenido */
+    text-align: center; /* Centrar el texto */
+}
+
+.menu.active {
+    display: flex; /* Mostrar menú cuando está activo */
+    flex-direction: column;
+}
+
+.menu__item {
+    padding: 15px 30px; /* Espaciado interno */
+    cursor: pointer;
+    transition: background-color 0.3s;
+    color: var(--header-color); /* Color del texto del menú */
+}
+
+.menu__item:hover {
+    background-color: var(--item-hover-color);
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .menu__toggle {
+        display: block; /* Mostrar icono de menú en móvil */
+        cursor: pointer;
+        margin-left: auto; /* Alinear a la derecha */
+        font-size: 26px; /* Ajusta el tamaño */
+    }
+
+    .header__button {
+        display: none; /* Ocultar botones en móvil */
+    }
+
+    .toggle {
+        margin-left: auto; /* Alinear el toggle a la derecha */
+    }
+
+    .menu {
+        width: 100%; /* Ancho completo */
+    }
+}
+
+/* Cambiar colores en modo oscuro */
+[data-theme='dark'] .app__header {
+    background-color: var(--header-bg-dark);
+    color: var(--header-color-dark);
+}
+
+[data-theme='dark'] .menu {
+    background-color: var(--header-bg-dark);
+}
+
+[data-theme='dark'] .menu__item {
+    color: var(--header-color-dark);
+}
