@@ -70,7 +70,7 @@ const Header = () => {
             {navbarOpen && (
                 <div className="navbar active">
                     <div className="navbar__item" onClick={() => goToPage('/')}>Home</div>
-                    <div className="navbar__item" onClick={() => goToPage('/favorites')}>Favorites</div>
+                    <div className="navbar__item" onClick={() => goToPage('/favorites')}>Favoritos</div>
                     {/*  Interruptor
                     <div className="navbar__item">
                         <ThemeToggle isChecked={isChecked} onChange={changeTheme} />
