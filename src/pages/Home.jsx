@@ -5,6 +5,7 @@ import BaseUrl from '../services/BaseURL';
 import Scroll from '../components/Scroll';
 import Loading from '../components/Loading';
 import Filters from '../components/Filters';
+import Pagination from '../components/Pagination'; 
 import { motion } from "framer-motion";
 import { list, items } from '../utils/animations'; 
 
@@ -58,7 +59,9 @@ class Home extends React.Component {
                 "all types", "grass", "bug", "dark", "dragon", "electric", "fairy", "fighting", "fire", "flying", "ghost", "ground", "ice", "normal", "poison", "psychic", "rock", "steel", "water"
             ],
             sortby: ["ID", "Name"],
-        }
+            currentPage: 1,
+            pokemonsPerPage: 8,
+        };
     }
     //ciclo de vida
     componentDidMount() {
@@ -289,7 +292,10 @@ class Home extends React.Component {
     }
 
     render() {
-        
+        const { allPokemons, currentPage, pokemonsPerPage } = this.state;
+        const indexOfLastPokemon = currentPage * pokemonsPerPage;
+        const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
+        const currentPokemons = allPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
         return (
         <>
             <Scroll showBelow={250} className="scroll__top" />
@@ -332,69 +338,30 @@ class Home extends React.Component {
                             searchChange={this.handleChangeSearch}
                         />
                         <div className="pokemon__container">
-                            <div className="all__pokemons">
-                                {this.state.isSearch ? Object.keys(this.state.searchPokemons).map((item) =>
-                                    <Pokemon
-                                        key={this.state.searchPokemons[item].id}
-                                        id={this.state.searchPokemons[item].id}
-                                        image={this.state.searchPokemons[item].sprites.other.dream_world.front_default ? this.state.searchPokemons[item].sprites.other.dream_world.front_default : this.state.searchPokemons[item].sprites.other['official-artwork'].front_default}
-                                        name={this.state.searchPokemons[item].name}
-                                        type={this.state.searchPokemons[item].types}
-                                        onElemClick={() => this.fetchPokemonData(
-                                        this.state.searchPokemons[item].id, 
-                                        this.state.searchPokemons[item].name, 
-                                        this.state.searchPokemons[item].types, 
-                                        this.state.searchPokemons[item].sprites.other.dream_world.front_default 
-                                        ? this.state.searchPokemons[item].sprites.other.dream_world.front_default 
-                                        : this.state.searchPokemons[item].sprites.other['official-artwork'].front_default)}
-                                    />) :
-                                    (!this.state.isFilter ?
-                                        <motion.ul
-                                            style={{
-                                                display: 'flex',
-                                                flexWrap: 'wrap',
-                                                listStyleType: 'none',
-                                                paddingInlineStart: '0px',
-                                                marginBlockStart: '0px',
-                                                marginBlockEnd: '0px',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                            }}
-                                            initial="hidden"
-                                            animate="visible"
-                                            variants={list}>
-                                            {Object.keys(this.state.allPokemons).map((item) => (
-                                        <motion.li key={this.state.allPokemons[item].id} variants={items}>
-                                            <Pokemon
-                                                key={this.state.allPokemons[item].id}
-                                                id={this.state.allPokemons[item].id}
-                                                image={this.state.allPokemons[item].sprites.other.dream_world.front_default ? this.state.allPokemons[item].sprites.other.dream_world.front_default : this.state.allPokemons[item].sprites.other['official-artwork'].front_default}
-                                                name={this.state.allPokemons[item].name}
-                                                type={this.state.allPokemons[item].types}
-                                                onElemClick={() => this.fetchPokemonData(this.state.allPokemons[item].id, this.state.allPokemons[item].name, this.state.allPokemons[item].types, this.state.allPokemons[item].sprites.other.dream_world.front_default ? this.state.allPokemons[item].sprites.other.dream_world.front_default : this.state.allPokemons[item].sprites.other['official-artwork'].front_default)}
-                                        />
-                                        </motion.li>
-                                    ))}
-                                        </motion.ul> :
-                                    Object.keys(this.state.filterPokemons).map((item) =>
+                                <div className="all__pokemons">
+                                    {currentPokemons.map(pokemon => (
                                         <Pokemon
-                                            key={this.state.filterPokemons[item].id}
-                                            id={this.state.filterPokemons[item].id}
-                                            image={this.state.filterPokemons[item].sprites.other.dream_world.front_default ? this.state.filterPokemons[item].sprites.other.dream_world.front_default : this.state.filterPokemons[item].sprites.other['official-artwork'].front_default}
-                                            name={this.state.filterPokemons[item].name}
-                                            type={this.state.filterPokemons[item].types}
-                                            onElemClick={() => this.fetchPokemonData(this.state.filterPokemons[item].id, this.state.filterPokemons[item].name, this.state.filterPokemons[item].types, this.state.filterPokemons[item].sprites.other.dream_world.front_default ? this.state.filterPokemons[item].sprites.other.dream_world.front_default : this.state.filterPokemons[item].sprites.other['official-artwork'].front_default)}
+                                            key={pokemon.id}
+                                            id={pokemon.id}
+                                            image={pokemon.sprites.other.dream_world.front_default || pokemon.sprites.other['official-artwork'].front_default}
+                                            name={pokemon.name}
+                                            type={pokemon.types}
+                                            onElemClick={() => this.fetchPokemonData(pokemon.id, pokemon.name, pokemon.types)}
                                         />
-                                    ))
-                                }
+                                    ))}
+                                </div>
                             </div>
-                        </div>
+                            <Pagination 
+                                totalPokemons={allPokemons.length} 
+                                pokemonsPerPage={pokemonsPerPage} 
+                                paginate={page => this.setState({ currentPage: page })} 
+                            />
                     {this.state.noDataFound && <div className="no__data noselect">
                         No such Pokémon in this region :/</div>}
                     </>
-                )}
-            </div>}
-        </>
+                    )}
+                </div>}
+            </>
         );
     }
 }
