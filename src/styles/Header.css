@@ -53,7 +53,7 @@
 .header__button {
     background: none;
     color: var(--header-color);
-    font-size: 18px;
+    font-size: 20px;
     cursor: pointer;
     border: none;
     transition: background-color 0.3s, color 0.3s;
@@ -66,9 +66,7 @@
 /* Icono de GitHub */
 .github__icon {
     cursor: pointer;
-    font-size: 35px; /* Asegúrate de que el tamaño sea adecuado */
     width: 5vw;
-    margin-left: -10px;
 }
 
 /* Estilos del toggle */
@@ -151,7 +149,7 @@
         cursor: pointer;
         margin-left: auto;
         margin-top: auto;
-        font-size: 26px;
+        font-size: 25px;
     }
 
     .header__buttons,

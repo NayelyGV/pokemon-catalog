@@ -11,6 +11,7 @@ import Zoom from '@mui/material/Zoom';
 import { motion } from 'framer-motion';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
+
 // Función para obtener la tasa de género
 const fetchGenderRate = (genderRate) => {
     if (genderRate < 0 || genderRate > 8) {
@@ -73,7 +74,7 @@ const InfoDialog = (props) => {
                                 <div className="pokemon__name">{props.name}</div>
                                 <div className="pokemon__genera" style={{ background: finalColor[0] }}>{props.genera}</div>
                             </div>
-                            <div className='info_container_favorite'></div>
+                            <div className='info_container_favorite'>F</div>
                         </div>
 
                         {/* Sección About */}
@@ -82,17 +83,15 @@ const InfoDialog = (props) => {
                             <div className="desc">{props.description}</div>
                         </div>
 
-                        {/* Sección Género */}
-                        <div className="gender__container">
+                        
+
+                        {/* Sección Dimensiones */}
+                        <div className="dimensions">
                             <p>
                                 <span className="info__container__headings">Gender %</span> 
                                 {props.genderRate === -1 ? "Genderless" : fetchGenderRate(props.genderRate)}
                             </p>
-                        </div>
-
-                        {/* Sección Dimensiones */}
-                        <div className="dimensions">
-                            <p>Tamaño
+                            <p>
                                 <span className="info__container__headings">Height</span> {`${(props.height / 10).toFixed(1)} m / ${Math.floor(props.height / 10 * 3.28)}' ${Math.round(((props.height / 10 * 3.28) % 1) * 12)}"`} 
                             </p>
                             <p>
@@ -119,15 +118,26 @@ const InfoDialog = (props) => {
                         {/* Sección Estadísticas */}
                         <div>
                             <div className="info__container__headings stats">Base Stats</div>
-                            <div className="info__container__data__data">
-                                {props.stats.map((stat) => (
-                                    <div key={stat['stat__name']} className="info__container__stat__columns">
-                                        <div className="info__container__stat__columns__name">{stat['stat__name']}</div>
-                                        <div className="info__container__stat__columns__val">{stat['stat__val']}</div>
-                                    </div>
-                                ))}
+                            <div className="info__container__data__data" >
+                                <div className="stats-container">
+                                    {props.stats.map((stat) => (
+                                        <div key={stat['stat__name']} className="stat-row">
+                                            <div className="stat-name">{stat['stat__name']}</div>
+                                            <div className="line-chart-container">
+                                                <div 
+                                                    className="line-chart" 
+                                                    style={{ width: `${stat['stat__val'] * 2}px`,background: `linear-gradient(${finalColor[0]}, ${finalColor[0]})` }} // Cambia el multiplicador según sea necesario
+                                                >
+                                                    <span className="stat-value">{stat['stat__val']}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         </div>
+
+
 
                         {/* Sección Evolución */}
                         <div>

@@ -17,6 +17,11 @@ html[data-theme=dark] {
     --bgcolor: #16171f;
 }
 
+body {
+    font-family: 'Arial', sans-serif; /* Usar Arial como fuente */
+    font-size: 20px; /* Tamaño de letra de 20px */
+}
+
 .info-dialog-container { 
     width: 100%; 
     height: 100%; 
@@ -60,7 +65,7 @@ html[data-theme=dark] {
     display: flex;
     justify-content: space-between; 
     align-items: center;
-
+    margin-top: 3vw;
     width: 100%; 
 }
 
@@ -73,19 +78,10 @@ html[data-theme=dark] {
 
 .pokemon__id {
     color: var(--pokenumber);
-    font-family: 'Teko', Arial;
+    
     font-weight: 400;
     font-size: 25px; 
     margin-right: 5vw; 
-    padding-bottom: 1rem; 
-}
-
-
-
-.poke__type__bg > img {
-    width: 75%;
-    height: auto;
-    border-radius: 100%;
 }
 
 .info__container__data__type {
@@ -106,113 +102,114 @@ html[data-theme=dark] {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); 
 }
 
-/* Texto */
-.pokemon__name {
-    font-size: 50px;
-    text-transform: capitalize;
-    font-family: 'Press Start 2P', Arial; 
-    text-align: center; 
+.poke__type__bg > img {
+    width: 75%;
+    height: auto;
+    border-radius: 100%;
 }
-
 /* Datos del Pokémon */
 .info__container__data {
     flex: 1;
     display: flex;
     flex-direction: column;
     width: 100%; 
-    margin: 0 auto; 
+    margin-left: 5vw;
 }
 
-/* Encabezados de Datos */
-.info__container__headings,
-.ability__list {
+.info__container__header__name {
+    display: flex; /* Para alinear las columnas horizontalmente */
+    justify-content: space-between; /* Para alinear las columnas en los extremos */
+    margin-top: 3vw; /* Margen superior para ambas columnas */
+}
+
+.info__container__title {
+    display: flex;
+    flex-direction: column; /* Para apilar los elementos verticalmente */
+    margin-bottom: 20px; /* Margen izquierdo en la columna 1 */
+}
+/* Texto */
+.pokemon__name {
+    font-size: 35px;
+    text-transform: capitalize;
+    font-family: 'Press Start 2P', Arial; 
+    text-align: center; 
+    margin-bottom: 0.5rem;
+    color: var(--pokename);
+}
+
+.pokemon__genera {/* Tamaño del género */
+    text-align: center;
+}
+
+.info__container__headings {
     display: flex;
     flex-direction: column;
     width: 100%; 
     margin: 0 auto; 
-    font-family: 'VT323', monospace;
-    font-size: 3vw; 
+    font-size: 25px; 
     font-weight: 600;
     margin-bottom: 0.625rem; 
 }
 
-.info__container__data__abilities {
+.info_container_favorite {
+    display: flex; /* O cualquier otro estilo que necesites */
+    align-items: start; /* Centrar verticalmente el contenido */
+    justify-content: flex-end; /* Alinear a la derecha sin margen */
+ /* Margen superior en la columna derecha */
+    font-size: 30px; /* Tamaño del contenido en la columna derecha */
+}
+
+.dimensions {
     display: flex;
-    flex-direction: column; 
-    align-items: center; 
-    width: 100%;
-    gap: 1rem; 
+    justify-content: space-between; /* Alinea los elementos en los extremos */
+    margin: 1rem 0; /* Agrega un margen vertical si es necesario */
 }
 
-/* Texto Adicional */
-.desc, 
-.ability__list__bg,
-.info__container__data__data {
-    display: flex; 
-    width: 100%; 
-    flex-wrap: wrap; 
-    gap: 1rem; 
-    align-items: center; 
-    justify-content: space-between; 
-    background-color: rgba(255, 255, 255, 0.25); 
-    padding: 0.625rem; 
-    border-radius: 1rem; 
+.dimensions p {
+    margin: 0; /* Elimina el margen por defecto de los párrafos */
+    font-size: 20px; /* Asegúrate de que el tamaño de la fuente sea 20px */
 }
-
-/* Asegurar que las columnas de estadística tengan el mismo tamaño */
-.info__container__stat__columns {
-    flex: 1; 
-    min-width: 135px; 
-}
-
-/* Componentes de Diálogo */
-.MuiDialog-paperFullWidth {
-    width: 63%;
-    border-radius: 1rem;
-    box-shadow: 0 10px 20px rgba(175, 136, 136, 0.29), 0 6px 6px rgba(0, 0, 0, 0.43);
-}
-
-.info__container__data__header {
+.stats-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    padding: 1rem 0;
-    gap: 1.5rem; 
+    flex-direction: column; /* Coloca las filas verticalmente */
+    gap:10px;
 }
 
-/* Dimensiones y género */
-.dimensions, 
-.gender__container {
+.stat-row {
     display: flex;
-    flex-direction: column; 
-    gap: 0.2rem; 
-    width: 50%; 
-    margin: 0 auto; 
-    text-align: center; 
+    align-items: center; /* Alinear elementos en el centro verticalmente */
+    margin-bottom: 5px; /* Espacio entre filas */
 }
 
-.info__container__data__columns__name {
-    text-transform: uppercase;
-    color: rgb(128, 126, 127);
+.stat-name {
+    flex: 1; /* Ocupa 1/3 del ancho */
+    text-align: right; /* Alinear texto a la izquierda */
+    margin-right: 10px; /* Espacio entre nombre y gráfico */
 }
 
-.dialog__bg {
-    background-image: url("../assets/images/fondo-transparente.png");
-    background-repeat: repeat;
+.line-chart-container {
+    flex: 1; /* Ocupa 2/3 del ancho */
+    position: relative; /* Para posicionar el valor dentro de la barra */
 }
 
-.dialog__content {
-    font-family: 'VT323', monospace;
-    font-size: 1.3125rem; 
+.line-chart {
+    height: 25px; /* Altura de la barra */
+    background: #4ca0af; /* Color de la barra */
+    border-radius: 5px; /* Esquinas redondeadas */
+    transition: width 0.5s ease; /* Animación al cambiar de tamaño */
+    position: relative; /* Para permitir el posicionamiento relativo del valor */
 }
 
+.stat-value {
+    position: absolute; 
+    left: 50%; /* Centrar el valor dentro de la barra */
+    top: -1px;
+    transform: translateX(-50%); /* Ajustar la posición para centrar */
+    color: rgb(1, 1, 1); /* Color del texto dentro de la barra */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+}
 .close__btn {
     width: 1.875rem !important; 
-}
-
-.ability {
-    text-transform: capitalize;
 }
 
 .right__box {
@@ -230,6 +227,7 @@ html[data-theme=dark] {
     display: flex; 
     justify-content: center; 
     gap: 20px; 
+    margin-top: 20px;
 }
 
 .evolution__sub__box {
@@ -293,17 +291,10 @@ html[data-theme=dark] {
         font-size: 5vw; 
     }
 
-    .info__container__headings {
-        font-size: 4vw; 
-    }
  
     .info__container__data__data {
         flex-direction: column; 
         align-items: center; 
-    }
-
-    .info__container__stat__columns {
-        min-width: 100%; 
     }
 
     .dimensions, 
@@ -331,7 +322,4 @@ html[data-theme=dark] {
         font-size: 6vw; 
     }
 
-    .info__container__headings {
-        font-size: 5vw; 
-    }
 }
