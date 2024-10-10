@@ -9,6 +9,7 @@ import { motion } from "framer-motion";
 import { list, items } from '../utils/animations'; 
 
 
+
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -271,6 +272,22 @@ class Home extends React.Component {
         window[`scrollTo`]({ top: document.body.scrollHeight, behavior: `smooth` })
     }
 
+    closeDialog = () => {
+        this.setState({ 
+            showInfo: false,
+            // Reinicia los valores relacionados con la info del Pokémon
+            abilities: "",
+            height: "",
+            weight: "",
+            category: "",
+            pokeName: "",
+            pokeNumber: "",
+            description: "",
+            stats: [],
+            evoChain: []
+        });
+    }
+
     render() {
         
         return (
@@ -295,7 +312,9 @@ class Home extends React.Component {
                     evoChain={this.state.evoChain}
                     cancel={() => this.closeDialog()}
                     evolutionPokemon={this.fetchPokemonData}>
+                    <button onClick={this.closeDialog}></button>
                 </InfoDialog>}
+                
 
                 {!this.state.showInfo && (
                     <>

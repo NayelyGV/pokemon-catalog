@@ -9,6 +9,8 @@ import { colorTypeGradients } from '../utils/utils';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 import { motion } from 'framer-motion';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack'; 
+
 import Header from './Header';  // Asegúrate de importar tu Header
 import Footer from './Footer';  // Asegúrate de importar tu Footer
 
@@ -48,6 +50,9 @@ const InfoDialog = (props) => {
 
             <div className="info__container" style={{ background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})` }}>
                 <div className="info__container__img">
+                <div className="info__container__button">
+                    <ArrowBackIcon onClick={props.cancel} />
+                </div>
                     <div className="pokemon__id">#{String(props.number).padStart(3, '0')}</div>
                     <div className="pokemon__name">{props.name}</div>
                     <div className="pokemon__genera" style={{ background: finalColor[0] }}>{props.genera}</div>
