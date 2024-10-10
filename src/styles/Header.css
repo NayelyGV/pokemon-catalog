@@ -46,7 +46,7 @@
 
 .poke__logo:hover {
     transform: scale(1.2);
-  }
+}
 
 /* Botones del header */
 .header__button {
@@ -56,6 +56,10 @@
     cursor: pointer;
     border: none;
     transition: background-color 0.3s, color 0.3s;
+}
+.header__button.active {
+    color: var(--button-hover-color); /* Color del texto activo */
+    border-radius: 5px; /* Bordes redondeados opcional */
 }
 
 .header__button:hover {
