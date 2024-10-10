@@ -114,20 +114,6 @@ body {
   margin-top: 1rem;
 }
 
-/* Estilos de encabezado */
-.poke__name > h3 {
-  text-transform: capitalize;
-}
-
-
-.pokeball__box {
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 20px;
-}
-
-
-
 /* Controles de filtro */
 .filter__container {
   display: flex;
@@ -141,8 +127,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-family: 'BarcadeBrawl', cursive;
-  font-size: 3vw;
+  font-family: 'Arial', sans-serif;
+  font-size: 20px;
   transition: transform 0.3s;
   letter-spacing: 0.05em;
   color: var(--selectText); 
@@ -163,19 +149,19 @@ body {
 
 .filter__items > input:focus,
 .filter__items > select:focus {
-  outline: none; /* Elimina el contorno por defecto */
+  outline: none;
   border: 2px solid #fc0202;
 }
 
 .filter__items > input::placeholder,
 .filter__items > select {
-  color: var(--selectText); /* Color del texto en el placeholder */
-  opacity: 0.7; /* Menor opacidad para el placeholder */
+  color: var(--selectText); 
+  opacity: 0.7; 
 }
 
 .filter__items > input:hover,
 .filter__items > select:hover {
-  border: 2px solid #8302fc; /* Color del borde al pasar el mouse */
+  border: 2px solid #8302fc;
 }
 
 /* Estilos del interruptor */
@@ -266,7 +252,7 @@ body {
 }
 
 .github__icon svg {
-  font-size: inherit; /* Asegura que el SVG herede el tamaño */
+  font-size: inherit; 
 }
 
 .github__icon:hover {
