@@ -60,6 +60,7 @@ class Home extends React.Component {
             currentPage: 1,
             pokemonsPerPage: 8,
             favorites: [],
+            favoritesFilter: false
             
         }
     }
@@ -244,16 +245,16 @@ class Home extends React.Component {
     }
 
     handleChangeTypes = (event) => {
-        const selectedType = event.target.value;
+        const selectedType = event.target.value; 
         this.setState({ 
-            isTypeSelected: selectedType !== "All types", 
-            selectedType 
+            valuetype: selectedType // Actualiza el estado con el tipo seleccionado
         });
-
         if (selectedType === "All types") {
-            this.setState({ 
-                isFilter: false, 
-                allPokemons: this.state.allPokemons 
+            this.setState({
+                isTypeSelected: false, 
+                isFilter: false,
+                selectedType: "", 
+                filterPokemons: [], 
             });
         } else {
             const filterArr = this.state.allPokemons.filter(pokemon =>
@@ -261,9 +262,11 @@ class Home extends React.Component {
             );
 
             this.setState({
-                filterPokemons: filterArr,
-                isFilter: true
-            });
+            isTypeSelected: true,
+            selectedType,
+            filterPokemons: filterArr,
+            isFilter: true
+        });
         }
     }
 
@@ -308,6 +311,8 @@ class Home extends React.Component {
             ? this.state.searchPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
             : this.state.isFilter
             ? this.state.filterPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
+            : this.state.favoritesFilter
+            ? this.state.allPokemons.filter(pokemon => this.state.favorites.includes(pokemon.id)).slice(indexOfFirstPokemon, indexOfLastPokemon)
             : this.state.allPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
         return (
         <>
