@@ -3,7 +3,6 @@
     justify-content: center;
     align-items: center;
     margin: 20px 0;
-    padding: 10px;
 }
 
 .pagination ul {
@@ -14,39 +13,41 @@
 }
 
 .pagination li {
-    margin: 0 8px; /* Espaciado entre botones */
+    margin: 0 5px; /* Espaciado entre botones */
 }
 
 .pagination button {
-    padding: 10px 16px; 
-    background-color: #f9f9f9; /* Fondo suave */
-    border: 1px solid #ddd; /* Borde gris claro */
-    color: #333; /* Color de texto suave */
+    padding: 10px;
+    background-color: transparent; /* Fondo transparente por defecto */
+    border: none; /* Sin borde */
+    color: #000; /* Texto negro */
+    font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
-    border-radius: 12px; /* Bordes más redondeados */
-    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
-    font-weight: 500; 
-    font-size: 15px; 
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
+    transition: all 0.3s ease; /* Transición suave */
 }
 
 .pagination button:hover {
-    background-color: #e8e8e8; /* Fondo más oscuro al pasar el mouse */
-    border-color: #bbb; /* Borde más oscuro */
-}
-
-.pagination button:disabled {
-    background-color: #f0f0f0; 
-    color: #aaa; 
-    cursor: not-allowed; 
+    color: #333; /* Texto más oscuro al pasar el mouse */
+    transform: translateY(-3px); /* Efecto de elevación */
 }
 
 .pagination .active {
-    background-color: #00cbf8; /* Fondo para la página activa */
-    color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); /* Sombra pronunciada */
+    background-color: #000; /* Fondo negro para la página activa */
+    color: #fff; /* Texto blanco para la página activa */
+    border-radius: 50%; /* Convertir el fondo en un círculo */
+    padding: 10px 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); /* Sombra para la página activa */
 }
 
-.pagination .active:hover {
-    background-color: #0056b3; /* Fondo más oscuro para la página activa al pasar el mouse */
+.pagination button:disabled {
+    color: #ccc; /* Texto gris para botones deshabilitados */
+    cursor: not-allowed; /* Cursor para indicar que está deshabilitado */
+}
+
+/* Estilo para los botones de Anterior y Siguiente */
+.pagination button.prev-next {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000; /* Texto negro para botones de Anterior/Siguiente */
 }

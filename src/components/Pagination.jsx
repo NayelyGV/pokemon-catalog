@@ -6,14 +6,14 @@ const Pagination = ({ totalPokemons, pokemonsPerPage, paginate, currentPage }) =
     const totalPages = Math.ceil(totalPokemons / pokemonsPerPage);
     const range = 1;
 
-    for (let i = 1; i <= Math.ceil(totalPokemons / pokemonsPerPage); i++) {
+    for (let i = 1; i <= totalPages; i++) {
         pageNumbers.push(i);
     }
 
     const visiblePageNumbers = pageNumbers.filter(number => (
-        number === 1 ||
-        number === totalPages || 
-        (number >= currentPage - range && number <= currentPage + range) 
+        (number >= currentPage - range && number <= currentPage + range) || 
+        number === 1 || 
+        number === totalPages
     ));
 
     return (
@@ -21,11 +21,18 @@ const Pagination = ({ totalPokemons, pokemonsPerPage, paginate, currentPage }) =
             <ul>
                 {currentPage > 1 && (
                     <li>
-                        <button onClick={() => paginate(currentPage - 1)}>Anterior</button>
+                        <button onClick={() => paginate(currentPage - 1)} className="prev-next"> &lt; </button>
                     </li>
                 )}
-                {visiblePageNumbers.map(number => (
-                    <li key={number}>
+
+                {visiblePageNumbers[0] !== 1 && (
+                    <li>
+                        <span className="dots">...</span>
+                    </li>
+                )}
+
+                {visiblePageNumbers.map((number, index) => (
+                    <li key={index}>
                         <button 
                             onClick={() => paginate(number)} 
                             className={number === currentPage ? 'active' : ''}
@@ -34,9 +41,16 @@ const Pagination = ({ totalPokemons, pokemonsPerPage, paginate, currentPage }) =
                         </button>
                     </li>
                 ))}
+
+                {visiblePageNumbers[visiblePageNumbers.length - 1] !== totalPages && (
+                    <li>
+                        <span className="dots">...</span>
+                    </li>
+                )}
+
                 {currentPage < totalPages && (
                     <li>
-                        <button onClick={() => paginate(currentPage + 1)}>Siguiente</button>
+                        <button onClick={() => paginate(currentPage + 1)} className="prev-next"> &gt; </button>
                     </li>
                 )}
             </ul>
