@@ -1,10 +1,13 @@
 import React from 'react';
 import Pokemon from "../components/Pokemon";
+import InfoDialog from "../components/InfoDialog";
 import BaseUrl from '../services/BaseURL';
-import Loading from '../components/Loading';
-import Pagination from '../components/Pagination';
-import InfoDialog from '../components/InfoDialog';
 import Scroll from '../components/Scroll';
+import Loading from '../components/Loading';
+import Filters from '../components/Filters';
+import Pagination from '../components/Pagination'; 
+import { motion } from "framer-motion";
+import { list, items } from '../utils/animations'; 
 
 class Favorites extends React.Component {
     constructor(props) {
@@ -16,6 +19,8 @@ class Favorites extends React.Component {
             selectedPokemon: null,
             currentPage: 1,
             pokemonsPerPage: 8,
+            selectedType: 'All types', // Tipo por defecto
+            noDataFound: false, // Estado para mostrar mensaje de no datos
         };
     }
 
@@ -26,7 +31,7 @@ class Favorites extends React.Component {
     loadFavorites = () => {
         const storedFavorites = JSON.parse(localStorage.getItem('favorites')) || [];
         if (storedFavorites.length === 0) {
-            this.setState({ showLoading: false });
+            this.setState({ showLoading: false, noDataFound: true });
         } else {
             this.fetchFavoritePokemons(storedFavorites.map(fav => fav.id)); // Solo IDs
         }
@@ -48,6 +53,7 @@ class Favorites extends React.Component {
                 this.setState({
                     favoritePokemonData: validData,
                     showLoading: false,
+                    noDataFound: validData.length === 0, // Actualiza el estado de noDataFound
                 });
             })
             .catch(error => {
@@ -56,15 +62,51 @@ class Favorites extends React.Component {
             });
     };
 
-    // Resto de métodos...
+    fetchPokemonData = (pokemon) => {
+        this.setState({
+            selectedPokemon: pokemon,
+            showInfo: true,
+        });
+    };
+
+    toggleDialog = () => {
+        this.setState(prevState => ({
+            showInfo: !prevState.showInfo,
+            selectedPokemon: null,
+        }));
+    };
+
+    filterPokemonsByType = (type) => {
+        this.setState({ selectedType: type, currentPage: 1 });
+    };
+
+    paginate = (pageNumber) => {
+        this.setState({ currentPage: pageNumber });
+    };
 
     render() {
-        const { favoritePokemonData, showLoading, showInfo, selectedPokemon, currentPage, pokemonsPerPage } = this.state;
+        const { 
+            favoritePokemonData, 
+            showLoading, 
+            showInfo, 
+            selectedPokemon, 
+            currentPage, 
+            pokemonsPerPage, 
+            selectedType,
+            noDataFound 
+        } = this.state;
 
         const indexOfLastPokemon = currentPage * pokemonsPerPage;
         const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
-        const currentPokemons = favoritePokemonData.slice(indexOfFirstPokemon, indexOfLastPokemon);
 
+        const filteredPokemons = selectedType === 'All types'
+            ? favoritePokemonData
+            : favoritePokemonData.filter(pokemon => 
+                pokemon.types && pokemon.types.some(t => t.type.name === selectedType)
+            );
+
+        const currentPokemons = filteredPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
+        
         if (showLoading) {
             return <Loading />;
         }
@@ -72,20 +114,45 @@ class Favorites extends React.Component {
         return (
             <div className="favorites__container">
                 <Scroll showBelow={250} />
+
+                <div className="filters">
+                    <Filters 
+                        selectedType={selectedType}
+                        filterPokemonsByType={this.filterPokemonsByType}
+                    />
+                </div>
+
                 <div className="pokemon__container">
                     {currentPokemons.length > 0 ? (
-                        currentPokemons.map(pokemon => (
-                            <Pokemon
-                                key={pokemon.id}
-                                id={pokemon.id}
-                                image={pokemon.sprites.other.dream_world.front_default}
-                                name={pokemon.name}
-                                type={pokemon.types}
-                                onElemClick={() => this.fetchPokemonData(pokemon)} // Asegúrate de tener este método
-                            />
-                        ))
+                        <motion.ul
+                            style={{
+                                display: 'flex',
+                                flexWrap: 'wrap',
+                                listStyleType: 'none',
+                                paddingInlineStart: '0px',
+                                marginBlockStart: '0px',
+                                marginBlockEnd: '0px',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                            }}
+                            initial="hidden"
+                            animate="visible"
+                            variants={list}>
+                            {currentPokemons.map(pokemon => (
+                                <motion.li key={pokemon.id} variants={items}>
+                                    <Pokemon
+                                        key={pokemon.id}
+                                        id={pokemon.id}
+                                        image={pokemon.sprites.other.dream_world.front_default}
+                                        name={pokemon.name}
+                                        type={pokemon.types}
+                                        onElemClick={() => this.fetchPokemonData(pokemon)}
+                                    />
+                                </motion.li>
+                            ))}
+                        </motion.ul>
                     ) : (
-                        <p>No tienes Pokémon favoritos.</p>
+                        noDataFound && <p>No tienes Pokémon favoritos.</p>
                     )}
                 </div>
 
@@ -98,8 +165,9 @@ class Favorites extends React.Component {
                         cancel={this.toggleDialog}
                     />
                 )}
+                
                 <Pagination
-                    totalPokemons={favoritePokemonData.length}
+                    totalPokemons={filteredPokemons.length}
                     pokemonsPerPage={pokemonsPerPage}
                     paginate={this.paginate}
                     currentPage={currentPage}
