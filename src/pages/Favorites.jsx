@@ -7,7 +7,7 @@ import Loading from '../components/Loading';
 import Filters from '../components/Filters';
 import Pagination from '../components/Pagination'; 
 import { motion } from "framer-motion";
-import { list, items } from '../utils/animations'; 
+import { list, items } from '../utils/animations';
 
 class Favorites extends React.Component {
     constructor(props) {
@@ -19,8 +19,28 @@ class Favorites extends React.Component {
             selectedPokemon: null,
             currentPage: 1,
             pokemonsPerPage: 8,
-            selectedType: 'All types', // Tipo por defecto
-            noDataFound: false, // Estado para mostrar mensaje de no datos
+            selectedType: 'All types',
+            selectedRegion: 'All regions',
+            selectedSort: 'ID',
+            searchQuery: '', // Add search query state
+            noDataFound: false,
+            types: [
+                "All types", "grass", "bug", "dark", "dragon", "electric", "fairy", 
+                "fighting", "fire", "flying", "ghost", "ground", "ice", "normal", 
+                "poison", "psychic", "rock", "steel", "water"
+            ],
+            regions: [
+                { name: "All regions" },
+                { name: "Kanto" },
+                { name: "Johto" },
+                { name: "Hoenn" },
+                { name: "Sinnoh" },
+                { name: "Unova" },
+                { name: "Kalos" },
+                { name: "Alola" },
+                { name: "Galar" }
+            ],
+            sortOptions: ["ID", "Name"],
         };
     }
 
@@ -33,7 +53,7 @@ class Favorites extends React.Component {
         if (storedFavorites.length === 0) {
             this.setState({ showLoading: false, noDataFound: true });
         } else {
-            this.fetchFavoritePokemons(storedFavorites.map(fav => fav.id)); // Solo IDs
+            this.fetchFavoritePokemons(storedFavorites.map(fav => fav.id));
         }
     };
 
@@ -42,8 +62,8 @@ class Favorites extends React.Component {
             return BaseUrl.get(`/pokemon/${favoriteId}`)
                 .then(response => response.data)
                 .catch(error => {
-                    console.error('Error al obtener Pokémon:', error);
-                    return null; // Retorna null si hay un error
+                    console.error('Error fetching Pokémon:', error);
+                    return null; // Return null if there's an error
                 });
         });
 
@@ -53,11 +73,11 @@ class Favorites extends React.Component {
                 this.setState({
                     favoritePokemonData: validData,
                     showLoading: false,
-                    noDataFound: validData.length === 0, // Actualiza el estado de noDataFound
+                    noDataFound: validData.length === 0,
                 });
             })
             .catch(error => {
-                console.error('Error al obtener Pokémon favoritos:', error);
+                console.error('Error fetching favorite Pokémon:', error);
                 this.setState({ showLoading: false });
             });
     };
@@ -80,6 +100,18 @@ class Favorites extends React.Component {
         this.setState({ selectedType: type, currentPage: 1 });
     };
 
+    filterPokemonsByRegion = (region) => {
+        this.setState({ selectedRegion: region, currentPage: 1 });
+    };
+
+    sortPokemons = (sortOption) => {
+        this.setState({ selectedSort: sortOption, currentPage: 1 });
+    };
+
+    handleSearchChange = (event) => {
+        this.setState({ searchQuery: event.target.value, currentPage: 1 });
+    };
+
     paginate = (pageNumber) => {
         this.setState({ currentPage: pageNumber });
     };
@@ -92,20 +124,46 @@ class Favorites extends React.Component {
             selectedPokemon, 
             currentPage, 
             pokemonsPerPage, 
-            selectedType,
+            selectedType, 
+            selectedRegion, 
+            selectedSort, 
+            searchQuery, 
             noDataFound 
         } = this.state;
 
-        const indexOfLastPokemon = currentPage * pokemonsPerPage;
-        const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
-
+        // Filter Pokémon based on selected type
         const filteredPokemons = selectedType === 'All types'
             ? favoritePokemonData
             : favoritePokemonData.filter(pokemon => 
                 pokemon.types && pokemon.types.some(t => t.type.name === selectedType)
             );
 
-        const currentPokemons = filteredPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
+        // Filter Pokémon based on selected region
+        const regionFilteredPokemons = selectedRegion === 'All regions'
+            ? filteredPokemons
+            : filteredPokemons.filter(pokemon => {
+                // Adjust this based on how you fetch region data
+                // Add the logic to filter by region if available
+                return true; // Remove this line and add actual condition
+            });
+
+        // Filter Pokémon based on search query
+        const searchedPokemons = regionFilteredPokemons.filter(pokemon =>
+            pokemon.name.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+
+        // Sort Pokémon
+        const sortedPokemons = [...searchedPokemons].sort((a, b) => {
+            if (selectedSort === 'Name') {
+                return a.name.localeCompare(b.name);
+            }
+            return a.id - b.id; // Default sort by ID
+        });
+
+        const indexOfLastPokemon = currentPage * pokemonsPerPage;
+        const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
+
+        const currentPokemons = sortedPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
         
         if (showLoading) {
             return <Loading />;
@@ -118,7 +176,13 @@ class Favorites extends React.Component {
                 <div className="filters">
                     <Filters 
                         selectedType={selectedType}
+                        types={this.state.types}
+                        regions={this.state.regions}
+                        sortOptions={this.state.sortOptions}
                         filterPokemonsByType={this.filterPokemonsByType}
+                        filterPokemonsByRegion={this.filterPokemonsByRegion}
+                        sortPokemons={this.sortPokemons}
+                        onSearchChange={this.handleSearchChange} // Add search handler
                     />
                 </div>
 
@@ -167,7 +231,7 @@ class Favorites extends React.Component {
                 )}
                 
                 <Pagination
-                    totalPokemons={filteredPokemons.length}
+                    totalPokemons={sortedPokemons.length}
                     pokemonsPerPage={pokemonsPerPage}
                     paginate={this.paginate}
                     currentPage={currentPage}
