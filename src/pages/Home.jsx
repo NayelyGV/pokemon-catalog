@@ -54,7 +54,7 @@ class Home extends React.Component {
                 { name: "Galar", limit: 89, offset: 809 }
             ],
             types: [
-                "all types", "grass", "bug", "dark", "dragon", "electric", "fairy", "fighting", "fire", "flying", "ghost", "ground", "ice", "normal", "poison", "psychic", "rock", "steel", "water"
+                "All types", "grass", "bug", "dark", "dragon", "electric", "fairy", "fighting", "fire", "flying", "ghost", "ground", "ice", "normal", "poison", "psychic", "rock", "steel", "water"
             ],
             sortby: ["ID", "Name"],
             currentPage: 1,
@@ -83,7 +83,7 @@ class Home extends React.Component {
      //Obtiene  datos adicionales de los pokemones 
     getPokemonData = async (result) => {
         const pokemonArr = await Promise.all(result.map(async (pokemonItem) => {
-            const { data } = await BaseUrl.get(`https://pokeapi.co/api/v2/pokemon/${pokemonItem.name}`);
+            const { data } = await BaseUrl.get(`/pokemon/${pokemonItem.name}`);
             return data;
         }));
 
@@ -180,7 +180,7 @@ class Home extends React.Component {
 
     fetchPokemonDescription = async (pokemon_name) => {
         try {
-            const { data } = await BaseUrl.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemon_name}`);
+            const { data } = await BaseUrl.get(`/pokemon-species/${pokemon_name}`);
             await this.fetchEvoDetails(data.evolution_chain.url);
 
             const description = data.flavor_text_entries.find(entry => entry.language.name === "en")?.flavor_text || "Description not found";
@@ -246,11 +246,11 @@ class Home extends React.Component {
     handleChangeTypes = (event) => {
         const selectedType = event.target.value;
         this.setState({ 
-            isTypeSelected: selectedType !== "all types", 
+            isTypeSelected: selectedType !== "All types", 
             selectedType 
         });
 
-        if (selectedType === "all types") {
+        if (selectedType === "All types") {
             this.setState({ 
                 isFilter: false, 
                 allPokemons: this.state.allPokemons 
@@ -391,10 +391,7 @@ class Home extends React.Component {
                             paginate={page => this.setState({ currentPage: page })} 
                             currentPage={this.state.currentPage}
                         />
-                        <Favorites
-                            favorites={this.state.favorites}
-                            allPokemons={this.state.allPokemons}
-                        />
+                        
                     </>
                 )}
             </div>}

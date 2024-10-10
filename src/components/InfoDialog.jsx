@@ -48,7 +48,7 @@ const InfoDialog = ({
     abilities = [],
     stats = [],
     evoChain = [],
-    cancel,
+    cancel ,
     evolutionPokemon,
 }) => {
     const [isFavorite, setIsFavorite] = useState(() => {

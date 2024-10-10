@@ -6,6 +6,10 @@ import { colorTypeGradients } from '../utils/utils';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 
+export const capitalizeFirstLetter = (string) => {
+    if (typeof string !== 'string' || string.length === 0) return '';
+    return string.charAt(0).toUpperCase() + string.slice(1);
+};
 const Pokemon = ({ id, image, name, type, onElemClick }) => {
     const [isFavorite, setIsFavorite] = useState(() => {
         const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
@@ -39,7 +43,8 @@ const Pokemon = ({ id, image, name, type, onElemClick }) => {
             setIsFavorite(true); // Actualizar el estado
         }
     };
-    
+   
+
     return (
         <div className="thumbnail__container noselect" style={{ background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})` }}>
             <div className="card__header">
@@ -77,7 +82,7 @@ const Pokemon = ({ id, image, name, type, onElemClick }) => {
                 />
             </div>
             <div className="poke__name">
-                <h3>{name}</h3>
+                <h3>{capitalizeFirstLetter(name)}</h3>
                 <div className="poke__type">
                     {type.map((type) => (
                         <Tooltip TransitionComponent={Zoom} key={type.type.name} title={type.type.name} arrow>
