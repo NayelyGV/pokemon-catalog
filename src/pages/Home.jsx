@@ -326,7 +326,7 @@ class Home extends React.Component {
                     stats={this.state.stats}
                     img={this.state.imageURL}
                     name={this.state.pokeName}
-                    number={this.state.pokeNumber}
+                    number={this.state.pokeNumber || 0}
                     description={this.state.description}
                     evoChain={this.state.evoChain}
                     cancel={() => this.closeDialog()}

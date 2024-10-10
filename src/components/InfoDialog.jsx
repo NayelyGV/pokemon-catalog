@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import '../styles/InfoDialog.css';
 import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
@@ -11,7 +11,6 @@ import Zoom from '@mui/material/Zoom';
 import { motion } from 'framer-motion';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
-// Función para obtener la tasa de género
 const fetchGenderRate = (genderRate) => {
     if (genderRate < 0 || genderRate > 8) return <span>Gender rate out of bounds</span>;
 
@@ -37,21 +36,47 @@ const fetchGenderRate = (genderRate) => {
 };
 
 const InfoDialog = ({
-    number,
-    img,
-    category,
-    name,
-    genera,
-    description,
-    genderRate,
-    height,
-    weight,
-    abilities,
-    stats,
-    evoChain,
+    number = 0,
+    img = '',
+    category = [],
+    name = 'Unknown',
+    genera = '',
+    description = 'No description available',
+    genderRate = 0,
+    height = 0,
+    weight = 0,
+    abilities = [],
+    stats = [],
+    evoChain = [],
     cancel,
     evolutionPokemon,
 }) => {
+    const [isFavorite, setIsFavorite] = useState(() => {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        return favorites.some(p => p.id === number);
+    });
+
+    useEffect(() => {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        setIsFavorite(favorites.some(p => p.id === number));
+    }, [number]);
+
+    const handleFavoriteToggle = () => {
+        const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+        const isInFavorites = favorites.some(p => p.id === number);
+
+        if (isInFavorites) {
+            const updatedFavorites = favorites.filter(p => p.id !== number);
+            localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+            setIsFavorite(false);
+        } else {
+            const newFavorite = { id: number, image: img, name, types: category };
+            favorites.push(newFavorite);
+            localStorage.setItem('favorites', JSON.stringify(favorites));
+            setIsFavorite(true);
+        }
+    };
+
     if (!category || category.length === 0) return <div>No data available</div>;
 
     const finalColor = colorTypeGradients(
@@ -69,6 +94,18 @@ const InfoDialog = ({
                             <ArrowBackIcon />
                         </div>
                         <div className="pokemon__id">#{String(number).padStart(3, '0')}</div>
+                        <div className="favorite__icon" onClick={handleFavoriteToggle}>
+                            <svg
+                                stroke="currentColor"
+                                fill={isFavorite ? "red" : "none"}
+                                strokeWidth="1"
+                                viewBox="1 1 24 24"
+                                height="2em"
+                                width="2em"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"></path>
+                            </svg>
+                        </div>
                     </div>
 
                     <img src={img} alt="poke-img" />
@@ -90,7 +127,6 @@ const InfoDialog = ({
                                 <div className="pokemon__name">{name}</div>
                                 <div className="pokemon__genera" style={{ background: finalColor[0] }}>{genera}</div>
                             </div>
-                            <div className='info_container_favorite'>F</div>
                         </div>
 
                         <div className="about__section">
@@ -137,7 +173,7 @@ const InfoDialog = ({
                                             animate={{ rotate: 360 }}
                                             transition={{ duration: 2, ease: "easeOut", type: 'spring', bounce: 0.65, damping: 25 }}
                                             whileHover={{ scale: 1.05 }}
-                                            className="evolution__sub__box" // Cambiado
+                                            className="evolution__sub__box"
                                         >
                                             <div className="evolution__imgarrow">
                                                 <div className="evolution__img__div" style={{ background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})` }}>
@@ -162,9 +198,7 @@ const InfoDialog = ({
                                     </Delayed>
                                 ))}
                             </div>
-
                         </div>
-                        
                     </div>
                 </div>
             </div>
@@ -173,20 +207,20 @@ const InfoDialog = ({
 };
 
 InfoDialog.propTypes = {
-    number: PropTypes.number.isRequired,
-    img: PropTypes.string.isRequired,
-    category: PropTypes.array.isRequired,
-    name: PropTypes.string.isRequired,
-    genera: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    genderRate: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    weight: PropTypes.number.isRequired,
-    abilities: PropTypes.array.isRequired,
-    stats: PropTypes.array.isRequired,
-    evoChain: PropTypes.array.isRequired,
+    number: PropTypes.number,
+    img: PropTypes.string,
+    category: PropTypes.arrayOf(PropTypes.object),
+    name: PropTypes.string,
+    genera: PropTypes.string,
+    description: PropTypes.string,
+    genderRate: PropTypes.number,
+    height: PropTypes.number,
+    weight: PropTypes.number,
+    abilities: PropTypes.arrayOf(PropTypes.string),
+    stats: PropTypes.arrayOf(PropTypes.object),
+    evoChain: PropTypes.arrayOf(PropTypes.object),
     cancel: PropTypes.func.isRequired,
-    evolutionPokemon: PropTypes.func.isRequired,
+    evolutionPokemon: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default InfoDialog;
