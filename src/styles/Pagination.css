@@ -14,37 +14,39 @@
 }
 
 .pagination li {
-    margin: 0 5px;
+    margin: 0 8px; /* Espaciado entre botones */
 }
 
 .pagination button {
-    padding: 10px 15px;
-    background-color: #f9f9f9; /* Color de fondo más claro */
-    border: 1px solid #ccc;
+    padding: 10px 16px; 
+    background-color: #f9f9f9; /* Fondo suave */
+    border: 1px solid #ddd; /* Borde gris claro */
+    color: #333; /* Color de texto suave */
     cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s, border-color 0.3s, transform 0.2s; /* Agregando transformación */
-    font-weight: 600; /* Texto más fuerte */
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra para un efecto 3D */
+    border-radius: 12px; /* Bordes más redondeados */
+    transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.2s ease; 
+    font-weight: 500; 
+    font-size: 15px; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
 .pagination button:hover {
-    background-color: #e0e0e0; /* Color de fondo al pasar el mouse */
-    transform: translateY(-2px); /* Efecto de elevación */
+    background-color: #e8e8e8; /* Fondo más oscuro al pasar el mouse */
+    border-color: #bbb; /* Borde más oscuro */
 }
 
 .pagination button:disabled {
-    background-color: #f0f0f0; /* Color deshabilitado más claro */
-    cursor: not-allowed;
+    background-color: #f0f0f0; 
+    color: #aaa; 
+    cursor: not-allowed; 
 }
 
 .pagination .active {
-    background-color: #007bff; /* Color de fondo para la página activa */
-    color: white;
-    border-color: #0056b3; /* Color de borde para la página activa */
-    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.4); /* Sombra para la página activa */
+    background-color: #00cbf8; /* Fondo para la página activa */
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3); /* Sombra pronunciada */
 }
 
 .pagination .active:hover {
-    background-color: #0056b3; /* Color de fondo para la página activa al pasar el mouse */
+    background-color: #0056b3; /* Fondo más oscuro para la página activa al pasar el mouse */
 }

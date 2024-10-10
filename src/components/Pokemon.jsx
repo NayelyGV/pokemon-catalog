@@ -20,7 +20,7 @@ const Pokemon = ({ id, image, name, type, onElemClick }) => {
     const toggleFavorite = () => {
         setIsFavorite(!isFavorite); // Alternar estado de favorito
     };
-
+    
     return (
         <div className="thumbnail__container noselect" style={{ background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})` }}>
             <div className="card__header">
