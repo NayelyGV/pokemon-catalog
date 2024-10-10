@@ -9,10 +9,7 @@ import { colorTypeGradients } from '../utils/utils';
 import Tooltip from '@mui/material/Tooltip';
 import Zoom from '@mui/material/Zoom';
 import { motion } from 'framer-motion';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack'; 
-
-import Header from './Header';  // Asegúrate de importar tu Header
-import Footer from './Footer';  // Asegúrate de importar tu Footer
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 // Función para obtener la tasa de género
 const fetchGenderRate = (genderRate) => {
@@ -47,48 +44,63 @@ const InfoDialog = (props) => {
 
     return (
         <div className="info-dialog-container">
-
-            <div className="info__container" style={{ background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})` }}>
-                <div className="info__container__img">
-                <div className="info__container__button">
-                    <ArrowBackIcon onClick={props.cancel} />
-                </div>
-                    <div className="pokemon__id">#{String(props.number).padStart(3, '0')}</div>
-                    <div className="pokemon__name">{props.name}</div>
-                    <div className="pokemon__genera" style={{ background: finalColor[0] }}>{props.genera}</div>
+            <div className="info__container" >
+                <div className="info__container__img" style={{ background: `linear-gradient(${finalColor[0]}, ${finalColor[1]})` }}>
+                    <div className="info__container__img__header">
+                        <div className="info__container__button">
+                            <ArrowBackIcon onClick={props.cancel} />
+                        </div>
+                        <div className="pokemon__id">#{String(props.number).padStart(3, '0')}</div>
+                    </div>
+                    
                     <img src={props.img} alt="poke-img" />
                     <div className="info__container__data__type">
-                        {props.category.map((category) => (
-                            <Tooltip TransitionComponent={Zoom} key={category.type.name} title={category.type.name} arrow>
-                                <div className={`poke__type__bg ${category.type.name}`}>
-                                    <img src={`${category.type.name}.svg`} alt="poke-type" />
-                                </div>
-                            </Tooltip>
-                        ))}
-                    </div>
-                    <div className="dimensions">
-                        <p>
-                            <span className="info__container__headings">Height</span> 
-                            {`${props.height / 10} m/${Math.floor(props.height / 10 * 3.28)}'${Math.round(((props.height / 10 * 3.28) % 1) * 12)}"`} 
-                        </p>
-                        <p>
-                            <span className="info__container__headings">Weight</span>
-                            {` ${(props.weight / 10).toFixed(1)} kg/${(props.weight * 0.2205).toFixed(1)} lbs`}
-                        </p>
-                    </div>
-                    <div className="gender__container">
-                        <p>
-                            <span className="info__container__headings">Gender %</span> 
-                            {props.genderRate === -1 ? "Genderless" : fetchGenderRate(props.genderRate)}
-                        </p>
+                            {props.category.map((category) => (
+                                <Tooltip TransitionComponent={Zoom} key={category.type.name} title={category.type.name} arrow>
+                                    <div className={`poke__type__bg ${category.type.name}`}>
+                                        <img src={`${category.type.name}.svg`} alt="poke-type" />
+                                    </div>
+                                </Tooltip>
+                            ))}
                     </div>
                 </div>
+
                 <div className="info__container__data">
                     <div className="right__box">
-                        <div>
+                        {/* Sección Name */}
+                        <div className="info__container__header__name">
+                            <div className="info__container__title">
+                                <div className="pokemon__name">{props.name}</div>
+                                <div className="pokemon__genera" style={{ background: finalColor[0] }}>{props.genera}</div>
+                            </div>
+                            <div className='info_container_favorite'></div>
+                        </div>
+
+                        {/* Sección About */}
+                        <div className="about__section">
                             <div className="info__container__headings">About</div>
                             <div className="desc">{props.description}</div>
                         </div>
+
+                        {/* Sección Género */}
+                        <div className="gender__container">
+                            <p>
+                                <span className="info__container__headings">Gender %</span> 
+                                {props.genderRate === -1 ? "Genderless" : fetchGenderRate(props.genderRate)}
+                            </p>
+                        </div>
+
+                        {/* Sección Dimensiones */}
+                        <div className="dimensions">
+                            <p>Tamaño
+                                <span className="info__container__headings">Height</span> {`${(props.height / 10).toFixed(1)} m / ${Math.floor(props.height / 10 * 3.28)}' ${Math.round(((props.height / 10 * 3.28) % 1) * 12)}"`} 
+                            </p>
+                            <p>
+                                <span className="info__container__headings">Weight</span>{` ${(props.weight / 10).toFixed(1)} kg / ${(props.weight * 0.2205).toFixed(1)} lbs`}
+                            </p>
+                        </div>
+
+                        {/* Sección Habilidades */}
                         <div className="info__container__data__header">
                             <div className="info__container__data__abilities">
                                 <div className="info__container__headings">Abilities</div>
@@ -103,6 +115,8 @@ const InfoDialog = (props) => {
                                 </div>
                             </div>
                         </div>
+
+                        {/* Sección Estadísticas */}
                         <div>
                             <div className="info__container__headings stats">Base Stats</div>
                             <div className="info__container__data__data">
@@ -114,6 +128,8 @@ const InfoDialog = (props) => {
                                 ))}
                             </div>
                         </div>
+
+                        {/* Sección Evolución */}
                         <div>
                             <div className="info__container__headings">Evolution</div>
                             <div className="evolution__box">
@@ -156,25 +172,25 @@ const InfoDialog = (props) => {
                         </div>
                     </div>
                 </div>
-            </div> 
+            </div>
         </div>
     );
 };
 
 InfoDialog.propTypes = {
-    open: PropTypes.bool.isRequired,
-    cancel: PropTypes.func.isRequired,
-    name: PropTypes.string.isRequired,
     number: PropTypes.number.isRequired,
-    height: PropTypes.number.isRequired,
-    weight: PropTypes.number.isRequired,
-    category: PropTypes.array.isRequired,
     img: PropTypes.string.isRequired,
+    category: PropTypes.array.isRequired,
+    name: PropTypes.string.isRequired,
+    genera: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     genderRate: PropTypes.number.isRequired,
+    height: PropTypes.number.isRequired,
+    weight: PropTypes.number.isRequired,
     abilities: PropTypes.array.isRequired,
     stats: PropTypes.array.isRequired,
     evoChain: PropTypes.array.isRequired,
+    cancel: PropTypes.func.isRequired,
     evolutionPokemon: PropTypes.func.isRequired,
 };
 
