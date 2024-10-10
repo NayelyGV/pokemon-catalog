@@ -1,7 +1,5 @@
 /* Variables de color y diseño */
 html {
-  --toggle: hsl(230deg 17% 85%);
-  --bggradient: url("../src/assets/images/bg.png");
   --bgcolor: none;
   --colorPrimary: #000;
   --filterHeading: #000;
@@ -26,11 +24,6 @@ html, body {
   overflow-x: hidden; /* Evita el scroll horizontal */
 }
 
-/* Fuentes */
-@font-face {
-  font-family: 'pixeloperatormono';
-  src: url('../src/assets/fonts/PixelOperatorMono.ttf');
-}
 
 /* Estilos globales */
 body {
