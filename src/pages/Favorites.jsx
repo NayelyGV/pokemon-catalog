@@ -22,7 +22,7 @@ class Favorites extends React.Component {
             selectedType: 'All types',
             selectedRegion: 'All regions',
             selectedSort: 'ID',
-            searchQuery: '', // Add search query state
+            searchQuery: '',
             noDataFound: false,
             types: [
                 "All types", "grass", "bug", "dark", "dragon", "electric", "fairy", 
@@ -30,15 +30,14 @@ class Favorites extends React.Component {
                 "poison", "psychic", "rock", "steel", "water"
             ],
             regions: [
-                { name: "All regions" },
-                { name: "Kanto" },
-                { name: "Johto" },
-                { name: "Hoenn" },
-                { name: "Sinnoh" },
-                { name: "Unova" },
-                { name: "Kalos" },
-                { name: "Alola" },
-                { name: "Galar" }
+                { name: "Kanto", limit: 151, offset: 0 },
+                { name: "Johto", limit: 100, offset: 151 },
+                { name: "Hoenn", limit: 135, offset: 251 },
+                { name: "Sinnoh", limit: 108, offset: 386 },
+                { name: "Unova", limit: 155, offset: 494 },
+                { name: "Kalos", limit: 72, offset: 649 },
+                { name: "Alola", limit: 88, offset: 721 },
+                { name: "Galar", limit: 89, offset: 809 }
             ],
             sortOptions: ["ID", "Name"],
         };
@@ -59,6 +58,7 @@ class Favorites extends React.Component {
 
     fetchFavoritePokemons = (favoriteIds) => {
         const promises = favoriteIds.map(favoriteId => {
+            console.log(`Fetching Pokémon data from: /pokemon/${favoriteId}`); // Log URL
             return BaseUrl.get(`/pokemon/${favoriteId}`)
                 .then(response => response.data)
                 .catch(error => {
@@ -93,7 +93,7 @@ class Favorites extends React.Component {
         this.setState(prevState => ({
             showInfo: !prevState.showInfo,
             selectedPokemon: null,
-        }));
+        }));    
     };
 
     filterPokemonsByType = (type) => {
@@ -142,9 +142,7 @@ class Favorites extends React.Component {
         const regionFilteredPokemons = selectedRegion === 'All regions'
             ? filteredPokemons
             : filteredPokemons.filter(pokemon => {
-                // Adjust this based on how you fetch region data
-                // Add the logic to filter by region if available
-                return true; // Remove this line and add actual condition
+                return this.getRegionFromId(pokemon.id) === selectedRegion; 
             });
 
         // Filter Pokémon based on search query
@@ -163,7 +161,10 @@ class Favorites extends React.Component {
         const indexOfLastPokemon = currentPage * pokemonsPerPage;
         const indexOfFirstPokemon = indexOfLastPokemon - pokemonsPerPage;
 
-        const currentPokemons = sortedPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
+        // Determine the current Pokémon list based on search, filter, or favorites
+        const currentPokemons = searchedPokemons.length > 0 
+            ? sortedPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
+            : filteredPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
         
         if (showLoading) {
             return <Loading />;
@@ -182,7 +183,7 @@ class Favorites extends React.Component {
                         filterPokemonsByType={this.filterPokemonsByType}
                         filterPokemonsByRegion={this.filterPokemonsByRegion}
                         sortPokemons={this.sortPokemons}
-                        onSearchChange={this.handleSearchChange} // Add search handler
+                        onSearchChange={this.handleSearchChange}
                     />
                 </div>
 
@@ -205,7 +206,6 @@ class Favorites extends React.Component {
                             {currentPokemons.map(pokemon => (
                                 <motion.li key={pokemon.id} variants={items}>
                                     <Pokemon
-                                        key={pokemon.id}
                                         id={pokemon.id}
                                         image={pokemon.sprites.other.dream_world.front_default}
                                         name={pokemon.name}
