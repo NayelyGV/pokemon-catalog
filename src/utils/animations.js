@@ -1,5 +1,3 @@
-// src/components/animations.js
-
 export const list = {
     visible: {
         opacity: 1,
