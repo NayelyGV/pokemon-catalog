@@ -8,9 +8,7 @@ import Filters from '../components/Filters';
 import Pagination from '../components/Pagination'; 
 import { motion } from "framer-motion";
 import { list, items } from '../utils/animations'; 
-
-
-
+import Favorites from './Favorites';
 class Home extends React.Component {
     constructor(props) {
         super(props);
@@ -61,6 +59,7 @@ class Home extends React.Component {
             sortby: ["ID", "Name"],
             currentPage: 1,
             pokemonsPerPage: 8,
+            favorites: [],
             
         }
     }
@@ -292,8 +291,24 @@ class Home extends React.Component {
         });
     }
 
+    toggleFavorite = (pokemon) => {
+        this.setState(prevState => {
+            const isFavorite = prevState.favorites.includes(pokemon.id);
+            const newFavorites = isFavorite
+                ? prevState.favorites.filter(id => id !== pokemon.id) // Remove from favorites
+                : [...prevState.favorites, pokemon.id]; // Add to favorites
+            return { favorites: newFavorites };
+        });
+    }
     render() {
-        
+        const indexOfLastPokemon = this.state.currentPage * this.state.pokemonsPerPage;
+        const indexOfFirstPokemon = indexOfLastPokemon - this.state.pokemonsPerPage;
+    
+        const currentPokemons = this.state.isSearch
+            ? this.state.searchPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
+            : this.state.isFilter
+            ? this.state.filterPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon)
+            : this.state.allPokemons.slice(indexOfFirstPokemon, indexOfLastPokemon);
         return (
         <>
             <Scroll showBelow={250} className="scroll__top" />
@@ -322,6 +337,7 @@ class Home extends React.Component {
 
                 {!this.state.showInfo && (
                     <>
+                    
                         <Filters
                             valueregion={this.state.valueregion}
                             regions={this.state.regions}
@@ -337,70 +353,48 @@ class Home extends React.Component {
                         />
                         <div className="pokemon__container">
                             <div className="all__pokemons">
-                                {this.state.isSearch ? Object.keys(this.state.searchPokemons).map((item) =>
-                                    <Pokemon
-                                        key={this.state.searchPokemons[item].id}
-                                        id={this.state.searchPokemons[item].id}
-                                        image={this.state.searchPokemons[item].sprites.other.dream_world.front_default ? this.state.searchPokemons[item].sprites.other.dream_world.front_default : this.state.searchPokemons[item].sprites.other['official-artwork'].front_default}
-                                        name={this.state.searchPokemons[item].name}
-                                        type={this.state.searchPokemons[item].types}
-                                        onElemClick={() => this.fetchPokemonData(
-                                        this.state.searchPokemons[item].id, 
-                                        this.state.searchPokemons[item].name, 
-                                        this.state.searchPokemons[item].types, 
-                                        this.state.searchPokemons[item].sprites.other.dream_world.front_default 
-                                        ? this.state.searchPokemons[item].sprites.other.dream_world.front_default 
-                                        : this.state.searchPokemons[item].sprites.other['official-artwork'].front_default)}
-                                    />) :
-                                    (!this.state.isFilter ?
-                                        <motion.ul
-                                            style={{
-                                                display: 'flex',
-                                                flexWrap: 'wrap',
-                                                listStyleType: 'none',
-                                                paddingInlineStart: '0px',
-                                                marginBlockStart: '0px',
-                                                marginBlockEnd: '0px',
-                                                alignItems: 'center',
-                                                justifyContent: 'center',
-                                            }}
-                                            initial="hidden"
-                                            animate="visible"
-                                            variants={list}>
-                                            {Object.keys(this.state.allPokemons).map((item) => (
-                                        <motion.li key={this.state.allPokemons[item].id} variants={items}>
-                                            <Pokemon
-                                                key={this.state.allPokemons[item].id}
-                                                id={this.state.allPokemons[item].id}
-                                                image={this.state.allPokemons[item].sprites.other.dream_world.front_default ? this.state.allPokemons[item].sprites.other.dream_world.front_default : this.state.allPokemons[item].sprites.other['official-artwork'].front_default}
-                                                name={this.state.allPokemons[item].name}
-                                                type={this.state.allPokemons[item].types}
-                                                onElemClick={() => this.fetchPokemonData(this.state.allPokemons[item].id, this.state.allPokemons[item].name, this.state.allPokemons[item].types, this.state.allPokemons[item].sprites.other.dream_world.front_default ? this.state.allPokemons[item].sprites.other.dream_world.front_default : this.state.allPokemons[item].sprites.other['official-artwork'].front_default)}
-                                        />
-                                        </motion.li>
-                                    ))}
-                                        </motion.ul> :
-                                    Object.keys(this.state.filterPokemons).map((item) =>
+                            <motion.ul
+                                style={{
+                                    display: 'flex',
+                                    flexWrap: 'wrap',
+                                    listStyleType: 'none',
+                                    paddingInlineStart: '0px',
+                                    marginBlockStart: '0px',
+                                    marginBlockEnd: '0px',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                                initial="hidden"
+                                animate="visible"
+                                variants={list}>
+                                {currentPokemons.map((item) => (
+                                    <motion.li key={item.id} variants={items}>
                                         <Pokemon
-                                            key={this.state.filterPokemons[item].id}
-                                            id={this.state.filterPokemons[item].id}
-                                            image={this.state.filterPokemons[item].sprites.other.dream_world.front_default ? this.state.filterPokemons[item].sprites.other.dream_world.front_default : this.state.filterPokemons[item].sprites.other['official-artwork'].front_default}
-                                            name={this.state.filterPokemons[item].name}
-                                            type={this.state.filterPokemons[item].types}
-                                            onElemClick={() => this.fetchPokemonData(this.state.filterPokemons[item].id, this.state.filterPokemons[item].name, this.state.filterPokemons[item].types, this.state.filterPokemons[item].sprites.other.dream_world.front_default ? this.state.filterPokemons[item].sprites.other.dream_world.front_default : this.state.filterPokemons[item].sprites.other['official-artwork'].front_default)}
+                                            key={item.id}
+                                            id={item.id}
+                                            image={item.sprites.other.dream_world.front_default ? item.sprites.other.dream_world.front_default : item.sprites.other['official-artwork'].front_default}
+                                            name={item.name}
+                                            type={item.types}
+                                            onElemClick={() => this.fetchPokemonData(item.id, item.name, item.types, item.sprites.other.dream_world.front_default ? item.sprites.other.dream_world.front_default : item.sprites.other['official-artwork'].front_default)}
                                         />
-                                    ))
-                                }
+                                    </motion.li>
+                                ))}
+                            </motion.ul>
                             </div>
                         </div>
                         {this.state.noDataFound && <div className="no__data noselect">
-                            No such Pokémon in this region :/</div>}
+                            No such Pokémon in this region :/</div>
+                            }
                         <Pagination 
-                                totalPokemons={this.state.allPokemons.length} 
-                                pokemonsPerPage={this.state.pokemonsPerPage} 
-                                paginate={page => this.setState({ currentPage: page })} 
-                                currentPage={this.state.currentPage}
-                            />
+                            totalPokemons={this.state.isSearch ? this.state.searchPokemons.length : this.state.isFilter ? this.state.filterPokemons.length : this.state.allPokemons.length} 
+                            pokemonsPerPage={this.state.pokemonsPerPage} 
+                            paginate={page => this.setState({ currentPage: page })} 
+                            currentPage={this.state.currentPage}
+                        />
+                        <Favorites
+                            favorites={this.state.favorites}
+                            allPokemons={this.state.allPokemons}
+                        />
                     </>
                 )}
             </div>}
